@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html xmlns='https://www.w3.org/1999/xhtml' lang='en'>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Dataset API Discovery 0.1</title>
+
+    <script type="text/javascript" class='remove'>
+        var respecConfig = {
+            // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+            specStatus: "CG-DRAFT",
+
+            // the specification's short name, as in https://www.w3.org/TR/short-name/
+            shortName: "dataset-api-discovery",
+
+            // if you wish the publication date to be other than today, set this
+            // publishDate:  "2009-08-06",
+
+            // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+            // and its maturity status
+            // previousPublishDate:  "1977-03-15",
+            //previousMaturity: "ED",
+            //previousPublishDate: "2018-05-03",
+
+            // if there a publicly available Editor's Draft, this is the link
+            edDraftURI: "https://openactive.io/dataset-api-discovery/EditorsDraft/",
+            //prevED:  "https://openactive.io/spec-template/",
+            //previousURI:  "https://openactive.io/realtime-paged-data-exchange/0.2.3/",
+            //testSuiteURI: "https://openactive.io/endpoint-validator/",
+            copyrightStart: 2019,
+
+            // editors, add as many as you like
+            // only "name" is required
+            editors: [{
+                name: "Leigh Dodds",
+                url: "https://ldodds.com",
+                company: "Open Data Institute",
+                companyURL: "https://theodi.org",
+                w3cid: 55359
+            }, {
+                name: "Nick Evans",
+                url: "https://nickevans.me/",
+                company: "Open Data Institute",
+                companyURL: "https://theodi.org"
+            }],
+
+            otherLinks: [{
+                key: "Version",
+                value: "0.1",
+                href: "https://github.com/openactive/dataset-api-discovery/issues/"
+            }],
+
+            logos: [{
+                src: 'https://www.openactive.io/assets/openactive-logo-large.png',
+                href: "https://www.openactive.io",
+                alt: "openactive.io",
+                width: 255, //170
+                height: 43, //22
+                id: 'logo'
+            }],
+
+            // name of the WG
+            wg: "OpenActive Community Group",
+
+            // URI of the public WG page
+            wgURI: "https://www.w3.org/community/openactive/",
+
+            // name (with the @w3c.org) of the public mailing to which comments are due
+            wgPublicList: "public-openactive",
+
+            maxTocLevel: 4,
+            preProcess: [],
+            //noRecTrack: true,
+            isRecTrack:   true,
+            isNoTrack:    true,
+            github: "https://github.com/openactive/dataset-api-discovery/",
+            format: "markdown",
+            localBiblio: {
+                "JSON-LD": {
+                    "href": "https://www.w3.org/TR/json-ld/",
+                    "title": "JSON-LD 1.0",
+                    "status": "REC",
+                    "publisher": "W3C",
+                },
+                "SCHEMA-ORG": {
+                    "href": "https://schema.org/",
+                    "title": "Schema.org"
+
+                },
+                "Modelling-Opportunity-Data": {
+                    "href": "https://openactive.io/modelling-opportunity-data/",
+                    "title": "Modelling Opportunity Data",
+                    "publisher": "OpenActive Community Group",
+                },
+                "RPDE": {
+                    "href": "https://openactive.io/realtime-paged-data-exchange/",
+                    "title": "Realtime Paged Data Exchange",
+                    "publisher": "OpenActive Community Group",
+                },
+                "OpenActive-Vocabulary": {
+                    "href": "https://openactive.io/ns/",
+                    "title": "OpenActive Vocabulary",
+                    "publisher": "OpenActive Community Group",
+                },
+                "OAuth2" : {
+                    "href": "https://oauth.net/2/",
+                    "title": "OAuth 2.0",
+                },
+                "OpenIdConnect" : {
+                    "href": "https://openid.net/connect/",
+                    "title": "OpenID Connect",
+                }
+            }
+        };
+    </script>
+
+    <script src='examples.js' class='remove'></script>
+
+    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid #bec9d9
+        }
+
+        td,
+        th {
+            padding: 3px 0.5em;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid #E2EDFE;
+        }
+
+        tr th[colspan] {
+            color: #005A9C;
+            background-color: #FEEDE2;
+            text-align: center
+        }
+
+        th {
+            color: #005A9C;
+            background-color: #E2EDFE;
+            font-weight: normal;
+            border-bottom: 1px solid #BEC9D9;
+        }
+
+        tbody tr th {
+            text-align: left;
+        }
+
+        td.nb {
+            font-size: smaller;
+        }
+
+        .rec,
+        .pr {
+            color: #005A9C;
+            background-color: #99EE99
+        }
+
+        .ext {
+            background-color: #FFFFFF
+        }
+
+        .cr,
+        .lcwd {
+            color: #005A9C;
+            background-color: #EEEE99
+        }
+
+        .wd {
+            color: #005A9C;
+            background-color: #EE9999
+        }
+
+        .ed,
+        .fpwd {
+            color: #005A9C;
+            background-color: #FF7777
+        }
+
+        code {
+            white-space: pre;
+        }
+
+        html {
+            background-image: none !important;
+        }
+
+        body {
+            background: white top left fixed no-repeat !important;
+            background-size: 25px auto !important;
+            background-image:
+                url('https://www.openactive.io/assets/openactive-label-specification.png') !important;
+        }
+
+        h1 {
+            font-family: 'Open Sans', sans-serif !important;
+            font-weight: 300 !important;
+            color: #3B3089 !important
+            font-size: 220%;
+        }
+
+        #toc {
+            padding-top: 0px !important;
+        }
+
+        .remove {
+            background-colour: yellow;
+        }
+
+        code {
+            color: #C83500;
+        }
+
+        em.rfc2119 {
+          text-transform:     lowercase;
+          font-variant:       small-caps;
+          font-style:         normal;
+          color:              #900;
+        }
+
+        a.internalDFN[href] {
+          color: #000;
+          font-weight: 500;
+        }
+    </style>
+
+</head>
+
+<body>
+<style>
+    body {
+        background-size: 25px auto !important;
+    }
+
+    body.toc-sidebar #toc {
+        background-size: 25px auto !important;
+        background-attachment: fixed !important;
+    }
+</style>
+<section id='abstract'>
+This document specifies a dataset site and embedded JSON-LD document that together describe
+an open data dataset and define related APIs that are available to manipulate it.
+</section>
+
+<section id='sotd'>
+Contributions to this document are not only welcomed but are actively solicited
+and should be made via
+[GitHub Issues](https://github.com/openactive/dataset-api-discovery/issues) and
+pull requests. The source code is available
+on [GitHub](https://github.com/openactive/dataset-api-discovery).
+
+<div class="note">
+  This document represents an early Editors Draft of the planned API design. It is
+  likely to change between now and its final version. These
+  early drafts are intended to help developers provide that feedback by developing
+  proof-of-concept implementations. We encourage developers to explore this API and
+  contribute to the development of the specification.
+</div>
+
+</section>
+
+<section class="informative">
+
+# Introduction
+
+The document is an output of the
+[OpenActive Community Group](https://www.w3.org/community/openactive/). As part
+of the [OpenActive](https://openactive.io) initiative, the community group is
+developing standards that will promote the publication and use of open
+[opportunity data](https://openactive.io/modelling-opportunity-data/#categories-of-physical-activity-data)
+in helping people to become more physically active.
+
+This specification aims to build on existing work by the [WebAPI Discovery Community Group](https://www.w3.org/community/web-api-discovery/) and the [Schema.org discussion](https://github.com/schemaorg/schemaorg/issues/1423), providing a profile and guidance specifically for Web APIs that manipulate openly available datasets, and conformance rules to ensure that implementers include the details necessary to allow <a>Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.
+
+The specification defines the requirements of a <a>Dataset Site</a> provided by a <a>Data Publisher</a> (server) for use by a <a>Data Consumer</a> (client). It includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.
+
+## Scope and requirements
+
+<a>Dataset Sites</a> that conform to this specification will be:
+- __Schema.org compatible__ - Remain fully compatible with schema.org, and machine-readable by <a>Data Consumers</a> that can read [Schema.org Dataset](https://schema.org/Dataset) and future [Schema.org WebAPI](https://schema.org/WebAPI) embedded JSON-LD.
+- __Google compatible__ - Use embedded JSON-LD to enable indexing by [Google Dataset Search](https://developers.google.com/search/docs/data-types/dataset), and any [future Google `WebAPI` Search](https://blog.apis.guru/api-discovery-can-we-do-better-2336706d5407).
+- __DCAT compatible__ - Include DCAT markup to ensure compatibility with the widest range of open data catalogues.
+- __Sufficient for automated integration__ - Allow <a>Data Consumer</a>s to reliably integrate with services that are compliant with a standardised [API specification](https://nordicapis.com/difference-api-documentation-specification-definition/) (e.g. a Swagger specification) without requiring additional configuration or human intervention.
+- __Human readable__ - Include human-readable content to allow developers to successfully integrate discover, consume and integrate with the <a>Data Publisher's</a> dataset and API.
+- __Interactive__ - Include a mechanism for <a>Data Consumers</a> to provide feedback to <a>Data Publishers</a> in the open, and subscribe to updates from <a>Data Publishers</a>.
+
+Note that although this specification of the [OpenActive Community Group](https://www.w3.org/community/openactive/), it is designed to apply to any open dataset where an API is available to manipulate it.
+
+### Functionality that is out of scope
+
+By design this specification will not define some types of functionality.
+
+These have been declared as permanently out of scope because they are
+adequately covered by existing specifications:
+
+* __API documentation__ - each system should provide its own documentation, the specification only requires that such documentation exists.
+* __API specification and API definition__ - many existing formats are available for API specification (e.g. Swagger, RAML, etc.).
+
+## Audience
+
+The document is primarily intended for the following audiences:
+
+- Software developers who want to publish a <a>Dataset Site</a> ("<a>Data Publishers</a>").
+- Software developers building client libraries or tools.
+- Software developers writing applications that will use <a>Dataset Sites</a> ("<a>Data Consumers</a>").
+
+</section>
+
+<section id="conformance">
+
+This specification makes use of the compact IRI Syntax; please refer to the
+[Compact IRIs](https://www.w3.org/TR/json-ld/#compact-iris) from [[JSON-LD]].
+
+</section>
+
+<section>
+
+# Typographical Conventions
+
+The following typographic conventions are used in this specification:
+
+<dl class="typography">
+    <dt><code>markup</code></dt>
+    <dd>Markup (elements, attributes, properties), machine processable
+        values (string, characters, media types), property name, or a
+        file name is in a monospace font.</dd>
+    <dt><a href="#" class="internalDFN">Definition</a></strong></dt>
+    <dd>A definition of a term, to be used elsewhere in this or other
+        specifications, is underlined and in black.</dd>
+    <dt><a href="">hyperlink</a></dt>
+    <dd>A hyperlink is underlined and in blue.</dd>
+    <dt>&#x5B;<a href="">reference</a>&#x5D;</dt>
+    <dd>A document reference (normative or informative) is enclosed in
+        square brackets and links to the references section.</dd>
+</dl>
+
+<div class="note">
+Notes are in light green boxes with a green left border and with a "Note"
+header in green. Notes are normative or informative depending on the whether
+they are in a normative or informative section, respectively.
+
+</div>
+<pre class="example">
+Examples are in light khaki boxes, with khaki left border, and with a
+numbered "Example" header in khaki. Examples are always informative.
+The content of the example is in monospace font and may be syntax colored.
+</pre>
+
+</section>
+
+<section>
+
+# Key Actors
+
+<dl class="typography">
+    <dt><dfn>Data Publisher</dfn></dt>
+    <dd>The application that is publishing the <a>Dataset Site</a>, that will also be making available open data endpoints and API endpoints for use by the <a>Data Consumer</a>.</dd>
+    <dt><dfn>Data Consumer</dfn></dt>
+    <dd>The application or human that is reading the <a>Dataset Site</a> in order  to make use of the available open data endpoints and API endpoints.</dd>
+</dl>
+
+</section>
+
+<section class="normative">
+
+# Dataset Site
+
+## Definition
+
+A <dfn>Dataset Site</dfn> is a human and machine readable web page ("<dfn>Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.
+
+## Purpose
+
+The purpose of a <a>Dataset Site</a> is to provide:
+
+* A web page that can be referenced when discussing the dataset.
+* A human and machine readable licence associated with the data (the <a>Dataset Page</a> contains invisible metadata which allows its details to be read automatically).
+* A human and machine readable rights statement to specify how dataset users (innovators who want to build on top of/use data) should attribute your data.
+* An accessible "single point of truth" that explains where the data can be found.
+* Details ("documentation") and historical record ("changelog") relating to the format of the data, including the specifications it follows, and the data fields it contains.
+* A place where the community can contribute with comments, and raise issues.
+* A mechanism by which <a>Data Consumers</a> can subscribe to get updates about changes to the data format, specifications and fields.
+* A human and machine readable description of any APIs that can be used to manipulate the data, and the process to gain access to such APIs.
+
+
+## Human-readable Dataset Page
+
+## Dataset Markup
+
+### JSON-LD
+
+### DCAT
+
+## API Markup
+
+## JSON-LD
+
+## Documentation
+
+
+
+</section>
+
+
+
+
+<section class="normative">
+
+# Future versions of this API
+
+Future iterations of the specification be shaped by the OpenActive community, and we encourage you to get involved.
+
+</section>
+
+
+<section class='appendix informative'>
+
+# Acknowledgements
+
+The editors thank [all members](https://www.w3.org/community/openactive/participants) of the OpenActive Community Group for their contributions.
+
+</section>
+
+</body>
+
+</html>
