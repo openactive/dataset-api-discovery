@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns="https://www.w3.org/1999/xhtml" lang="en"><head><meta charset="utf-8"><meta name="generator" content="ReSpec 24.4.5"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>/* --- EXAMPLES --- */
+<!DOCTYPE html><html xmlns="https://www.w3.org/1999/xhtml" lang="en"><head><meta charset="utf-8"><meta name="generator" content="ReSpec 24.34.1"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>/* --- EXAMPLES --- */
 span.example-title {
     text-transform: none;
 }
@@ -52,12 +52,10 @@ span.warning { padding: .1em .5em .15em; }
 
 .warning-title:before{
     content: "⚠"; /*U+26A0 WARNING SIGN*/
-    font-size: 3em;
+    font-size: 1.3em;
     float: left;
-    height: 100%;
     padding-right: .3em;
-    vertical-align: top;
-    margin-top: -0.5em;
+    margin-top: -0.3em;
 }
 
 li.task-list-item {
@@ -104,6 +102,19 @@ input.task-list-item-checkbox {
  * Robin Berjon - http://berjon.com/
  *****************************************************************/
 
+@keyframes pop {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1.25, 1.25);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
 /* Override code highlighter background */
 .hljs {
   background: transparent !important;
@@ -140,8 +151,28 @@ a.bibref {
   text-decoration: none;
 }
 
+.respec-offending-element:target {
+  animation: pop 0.25s ease-in-out 0s 1;
+}
+
+.respec-offending-element,
+a[href].respec-offending-element {
+  text-decoration: red wavy underline;
+}
+@supports not (text-decoration: red wavy underline) {
+  .respec-offending-element:not(pre) {
+    display: inline-block;
+  }
+  .respec-offending-element {
+    /* Red squiggly line */
+    background: url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=)
+      bottom repeat-x;
+  }
+}
+
 #references :target {
   background: #eaf3ff;
+  animation: pop 0.4s ease-in-out 0s 1;
 }
 
 cite .bibref {
@@ -154,6 +185,15 @@ code {
 
 th code {
   color: inherit;
+}
+
+a[href].orcid {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+a[href].orcid > svg {
+    margin-bottom: -2px;
 }
 
 /* --- TOC --- */
@@ -193,6 +233,12 @@ table.simple {
   text-align: left;
 }
 
+.simple th a {
+  color: #fff;
+  padding: 3px 5px;
+  text-align: left;
+}
+
 .simple th[scope="row"] {
   background: inherit;
   color: inherit;
@@ -210,11 +256,11 @@ table.simple {
 
 /* --- DL --- */
 
-.section dd>p:first-child {
+.section dd > p:first-child {
   margin-top: 0;
 }
 
-.section dd>p:last-child {
+.section dd > p:last-child {
   margin-bottom: 0;
 }
 
@@ -227,7 +273,7 @@ table.simple {
   margin-bottom: 0;
 }
 
-#issue-summary>ul,
+#issue-summary > ul,
 .respec-dfn-list {
   column-count: 2;
 }
@@ -243,7 +289,7 @@ details.respec-tests-details {
   vertical-align: top;
 }
 
-details.respec-tests-details>* {
+details.respec-tests-details > * {
   padding-right: 2em;
 }
 
@@ -256,19 +302,19 @@ details.respec-tests-details[open] {
   padding-bottom: 0.5em;
 }
 
-details.respec-tests-details[open]>summary {
+details.respec-tests-details[open] > summary {
   border-bottom: thin solid #cad3e2;
   padding-left: 1em;
   margin-bottom: 1em;
   line-height: 2em;
 }
 
-details.respec-tests-details>ul {
+details.respec-tests-details > ul {
   width: 100%;
   margin-top: -0.3em;
 }
 
-details.respec-tests-details>li {
+details.respec-tests-details > li {
   padding-left: 1em;
 }
 
@@ -290,30 +336,30 @@ aside.example .marker > a.self-link {
   color: inherit;
 }
 
-h2>a.self-link,
-h3>a.self-link,
-h4>a.self-link,
-h5>a.self-link,
-h6>a.self-link {
+h2 > a.self-link,
+h3 > a.self-link,
+h4 > a.self-link,
+h5 > a.self-link,
+h6 > a.self-link {
   border: none;
   color: inherit;
   font-size: 83%;
   height: 2em;
   left: -1.6em;
-  opacity: .5;
+  opacity: 0.5;
   position: absolute;
   text-align: center;
   text-decoration: none;
   top: 0;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
   width: 2em;
 }
 
-h2>a.self-link::before,
-h3>a.self-link::before,
-h4>a.self-link::before,
-h5>a.self-link::before,
-h6>a.self-link::before {
+h2 > a.self-link::before,
+h3 > a.self-link::before,
+h4 > a.self-link::before,
+h5 > a.self-link::before,
+h6 > a.self-link::before {
   content: "§";
   display: block;
 }
@@ -324,11 +370,11 @@ h6>a.self-link::before {
   }
 
   /* Don't position self-link in headings off-screen */
-  h2>a.self-link,
-  h3>a.self-link,
-  h4>a.self-link,
-  h5>a.self-link,
-  h6>a.self-link {
+  h2 > a.self-link,
+  h3 > a.self-link,
+  h4 > a.self-link,
+  h5 > a.self-link,
+  h6 > a.self-link {
     left: auto;
     top: auto;
   }
@@ -450,7 +496,7 @@ h6>a.self-link::before {
         }
     </style>
 
-<link rel="canonical" href="https://www.w3.org/TR/dataset-api-discovery/"><style>/*
+<style>/*
 
 github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
@@ -548,6 +594,51 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 .hljs-strong {
   font-weight: bold;
+}
+</style><style>var {
+  position: relative;
+  cursor: pointer;
+}
+
+var[data-type]::before,
+var[data-type]::after {
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+/* the triangle or arrow or caret or whatever */
+var[data-type]::before {
+  content: "";
+  transform: translateX(-50%);
+  border-width: 4px 6px 0 6px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #000;
+}
+
+/* actual text */
+var[data-type]::after {
+  content: attr(data-type);
+  transform: translateX(-50%) translateY(-100%);
+  background: #000;
+  text-align: center;
+  /* additional styling */
+  font-family: "Dank Mono", "Fira Code", monospace;
+  font-style: normal;
+  padding: 6px;
+  border-radius: 3px;
+  color: #daca88;
+  text-indent: 0;
+  font-weight: normal;
+}
+
+var[data-type]:hover::after,
+var[data-type]:hover::before {
+  opacity: 1;
 }
 </style><script id="initialUserConfig" type="application/json">{
   "specStatus": "CG-DRAFT",
@@ -652,18 +743,18 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
       "title": "OpenID Connect"
     }
   },
-  "publishISODate": "2019-03-13T00:00:00.000Z",
-  "generatedSubtitle": "Draft Community Group Report 13 March 2019"
+  "publishISODate": "2019-11-02T00:00:00.000Z",
+  "generatedSubtitle": "Draft Community Group Report 02 November 2019"
 }</script><meta name="description" content="This document specifies a dataset site and embedded JSON-LD document that together describe
 an open data dataset and define related APIs that are available to manipulate it."><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/cg-draft"></head>
 
 <body class="h-entry"><div class="head">
-      <a href="" class="logo"><img id="logo" alt="openactive.io" width="255" height="43" src="https://www.openactive.io/assets/openactive-logo-large.png"></a>
+      <a class="logo" href=""><img id="logo" alt="openactive.io" width="255" height="43" src="https://www.openactive.io/assets/openactive-logo-large.png"></a>
       <h1 class="title p-name" id="title">Dataset API Discovery 0.1</h1>
       
       <h2>
         Draft Community Group Report
-        <time class="dt-published" datetime="2019-03-13">13 March 2019</time>
+        <time class="dt-published" datetime="2019-11-02">02 November 2019</time>
       </h2>
       <dl>
         
@@ -744,32 +835,37 @@ contribute to the development of the specification.</p>
             <a href="mailto:public-openactive@w3.org">public-openactive@w3.org</a>
             (<a href="mailto:public-openactive-request@w3.org?subject=subscribe">subscribe</a>,
             <a href="https://lists.w3.org/Archives/Public/public-openactive/">archives</a>).
-          </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">1. </span>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#scope-and-requirements"><span class="secno">1.1 </span>Scope and requirements</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#functionality-that-is-out-of-scope"><span class="secno">1.1.1 </span>Functionality that is out of scope</a></li></ol></li><li class="tocline"><a class="tocxref" href="#audience"><span class="secno">1.2 </span>Audience</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">2. </span>Conformance</a></li><li class="tocline"><a class="tocxref" href="#typographical-conventions"><span class="secno">3. </span>Typographical Conventions</a></li><li class="tocline"><a class="tocxref" href="#key-actors"><span class="secno">4. </span>Key Actors</a></li><li class="tocline"><a class="tocxref" href="#dataset-site"><span class="secno">5. </span>Dataset Site</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><span class="secno">5.1 </span>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><span class="secno">5.2 </span>Purpose</a></li><li class="tocline"><a class="tocxref" href="#human-readable-dataset-page"><span class="secno">5.3 </span>Human-readable Dataset Page</a></li><li class="tocline"><a class="tocxref" href="#dataset-markup"><span class="secno">5.4 </span>Dataset Markup</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#json-ld"><span class="secno">5.4.1 </span>JSON-LD</a></li><li class="tocline"><a class="tocxref" href="#dcat"><span class="secno">5.4.2 </span>DCAT</a></li></ol></li><li class="tocline"><a class="tocxref" href="#api-markup"><span class="secno">5.5 </span>API Markup</a></li><li class="tocline"><a class="tocxref" href="#json-ld-0"><span class="secno">5.6 </span>JSON-LD</a></li><li class="tocline"><a class="tocxref" href="#documentation"><span class="secno">5.7 </span>Documentation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#future-versions-of-this-api"><span class="secno">6. </span>Future versions of this API</a></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><span class="secno">A. </span>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><span class="secno">B. </span>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">B.1 </span>Normative references</a></li></ol></li></ol></nav><section class="informative" id="introduction"><!--OddPage--><h2 id="x1-introduction"><span class="secno">1. </span>Introduction<a class="self-link" aria-label="§" href="#introduction"></a></h2><p><em>This section is non-normative.</em></p><p>The document is an output of the
+          </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#scope-and-requirements"><bdi class="secno">1.1 </bdi>Scope and requirements</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#functionality-that-is-out-of-scope"><bdi class="secno">1.1.1 </bdi>Functionality that is out of scope</a></li></ol></li><li class="tocline"><a class="tocxref" href="#audience"><bdi class="secno">1.2 </bdi>Audience</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">2. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#typographical-conventions"><bdi class="secno">3. </bdi>Typographical Conventions</a></li><li class="tocline"><a class="tocxref" href="#key-actors"><bdi class="secno">4. </bdi>Key Actors</a></li><li class="tocline"><a class="tocxref" href="#dataset-site"><bdi class="secno">5. </bdi>Dataset Site</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><bdi class="secno">5.1 </bdi>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">5.2 </bdi>Purpose</a></li><li class="tocline"><a class="tocxref" href="#human-readable-dataset-page"><bdi class="secno">5.3 </bdi>Human-readable Dataset Page</a></li><li class="tocline"><a class="tocxref" href="#dataset-markup"><bdi class="secno">5.4 </bdi>Dataset Markup</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#json-ld"><bdi class="secno">5.4.1 </bdi>JSON-LD</a></li><li class="tocline"><a class="tocxref" href="#dcat"><bdi class="secno">5.4.2 </bdi>DCAT</a></li></ol></li><li class="tocline"><a class="tocxref" href="#api-markup"><bdi class="secno">5.5 </bdi>API Markup</a></li><li class="tocline"><a class="tocxref" href="#json-ld-0"><bdi class="secno">5.6 </bdi>JSON-LD</a></li><li class="tocline"><a class="tocxref" href="#documentation"><bdi class="secno">5.7 </bdi>Documentation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#future-versions-of-this-api"><bdi class="secno">6. </bdi>Future versions of this API</a></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li></ol></li></ol></nav><section class="informative" id="introduction"><h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction<a class="self-link" aria-label="§" href="#introduction"></a></h2><p><em>This section is non-normative.</em></p><p>The document is an output of the
 <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>. As part
 of the <a href="https://openactive.io">OpenActive</a> initiative, the community group is
 developing standards that will promote the publication and use of open
 <a href="https://openactive.io/modelling-opportunity-data/#categories-of-physical-activity-data">opportunity data</a>
-in helping people to become more physically active.</p><p>This specification aims to build on existing work by the <a href="https://www.w3.org/community/web-api-discovery/">WebAPI Discovery Community Group</a> and the <a href="https://github.com/schemaorg/schemaorg/issues/1423">Schema.org discussion</a>, providing a profile and guidance specifically for Web APIs that manipulate openly available datasets, and conformance rules to ensure that implementers include the details necessary to allow <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.</p><p>The specification defines the requirements of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> provided by a <a href="#dfn-data-publisher" class="internalDFN" data-link-type="dfn">Data Publisher</a> (server) for use by a <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> (client). It includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.</p><section id="scope-and-requirements"><h3 id="x1-1-scope-and-requirements"><span class="secno">1.1 </span>Scope and requirements<a class="self-link" aria-label="§" href="#scope-and-requirements"></a></h3><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> that conform to this specification will be:</p><ul>
+in helping people to become more physically active.</p><p>This specification aims to build on existing work by the <a href="https://www.w3.org/community/web-api-discovery/">WebAPI Discovery Community Group</a> and the <a href="https://github.com/schemaorg/schemaorg/issues/1423">Schema.org discussion</a>, providing a profile and guidance specifically both for open data publishers and implementers of Web APIs that manipulate openly available datasets. It also aims to provide conformance rules to ensure that implementers include the details necessary to allow <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.</p><p>The specification defines the requirements of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> provided by a <a href="#dfn-data-publisher" class="internalDFN" data-link-type="dfn">Data Publisher</a> (server) for use by a <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> (client). It includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.</p><section id="scope-and-requirements"><h3 id="x1-1-scope-and-requirements"><bdi class="secno">1.1 </bdi>Scope and requirements<a class="self-link" aria-label="§" href="#scope-and-requirements"></a></h3><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> that conform to this specification will be:</p><ul>
 <li><strong>Schema.org compatible</strong> - Remain fully compatible with schema.org, and machine-readable by <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> that can read <a href="https://schema.org/Dataset">Schema.org Dataset</a> and future <a href="https://schema.org/WebAPI">Schema.org WebAPI</a> embedded JSON-LD.</li>
 <li><strong>Google compatible</strong> - Use embedded JSON-LD to enable indexing by <a href="https://developers.google.com/search/docs/data-types/dataset">Google Dataset Search</a>, and any <a href="https://blog.apis.guru/api-discovery-can-we-do-better-2336706d5407">future Google <code>WebAPI</code> Search</a>.</li>
 <li><strong>DCAT compatible</strong> - Include DCAT markup to ensure compatibility with the widest range of open data catalogues.</li>
 <li><strong>Sufficient for automated integration</strong> - Allow <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a>s to reliably integrate with services that are compliant with a standardised <a href="https://nordicapis.com/difference-api-documentation-specification-definition/">API specification</a> (e.g. a Swagger specification) without requiring additional configuration or human intervention.</li>
-<li><strong>Human readable</strong> - Include human-readable content to allow developers to successfully integrate discover, consume and integrate with the <a class="respec-offending-element" title="Linking error: not matching <dfn>" id="respec-offender-linking-error-not-matching-dfn">Data Publisher's</a> dataset and API.</li>
+<li><strong>Human readable</strong> - Include human-readable content to allow developers to successfully integrate discover, consume and integrate with the <a class="respec-offending-element" title="Error: No matching dfn found." id="respec-offender-error-no-matching-dfn-found">Data Publisher's</a> dataset and API.</li>
 <li><strong>Interactive</strong> - Include a mechanism for <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> to provide feedback to <a href="#dfn-data-publisher" class="internalDFN" data-link-type="dfn">Data Publishers</a> in the open, and subscribe to updates from <a href="#dfn-data-publisher" class="internalDFN" data-link-type="dfn">Data Publishers</a>.</li>
-</ul><p>Note that although this specification of the <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>, it is designed to apply to any open dataset where an API is available to manipulate it.</p><section id="functionality-that-is-out-of-scope"><h4 id="x1-1-1-functionality-that-is-out-of-scope"><span class="secno">1.1.1 </span>Functionality that is out of scope<a class="self-link" aria-label="§" href="#functionality-that-is-out-of-scope"></a></h4><p>By design this specification will not define some types of functionality.</p><p>These have been declared as permanently out of scope because they are
+</ul><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> will also provide the following information about the implementation of APIs it describes:</p><ul>
+<li>A route to gain access to the Web API described, e.g a website with a sign-up form, or simply a contact e-mail address.</li>
+<li>The specific version of any specification to which the Web API conforms (e.g. the <a href="https://www.openactive.io/open-booking-api/">Open Booking API</a>)</li>
+<li>The specific defined profiles of any specification that are supported, both for any Web APIs defined, but also for any open datasets.</li>
+<li>Where conformance is verified via third-party or self-certification, a statement of the level of conformance, and reference to evidence of this.</li>
+</ul><p>Note that although this specification of the <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>, it is designed to apply to any open dataset where an API is available to manipulate it.</p><section id="functionality-that-is-out-of-scope"><h4 id="x1-1-1-functionality-that-is-out-of-scope"><bdi class="secno">1.1.1 </bdi>Functionality that is out of scope<a class="self-link" aria-label="§" href="#functionality-that-is-out-of-scope"></a></h4><p>By design this specification will not define some types of functionality.</p><p>These have been declared as permanently out of scope because they are
 adequately covered by existing specifications:</p><ul>
 <li><strong>API documentation</strong> - each system should provide its own documentation, the specification only requires that such documentation exists.</li>
 <li><strong>API specification and API definition</strong> - many existing formats are available for API specification (e.g. Swagger, RAML, etc.).</li>
-</ul></section></section><section id="audience"><h3 id="x1-2-audience"><span class="secno">1.2 </span>Audience<a class="self-link" aria-label="§" href="#audience"></a></h3><p>The document is primarily intended for the following audiences:</p><ul>
+</ul></section></section><section id="audience"><h3 id="x1-2-audience"><bdi class="secno">1.2 </bdi>Audience<a class="self-link" aria-label="§" href="#audience"></a></h3><p>The document is primarily intended for the following audiences:</p><ul>
 <li>Software developers who want to publish a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> ("<a href="#dfn-data-publisher" class="internalDFN" data-link-type="dfn">Data Publishers</a>").</li>
 <li>Software developers building client libraries or tools.</li>
 <li>Software developers writing applications that will use <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> ("<a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a>").</li>
-</ul></section></section><section id="conformance"><!--OddPage--><h2 id="x2-conformance"><span class="secno">2. </span>Conformance<a class="self-link" aria-label="§" href="#conformance"></a></h2><p>
+</ul></section></section><section id="conformance"><h2 id="x2-conformance"><bdi class="secno">2. </bdi>Conformance<a class="self-link" aria-label="§" href="#conformance"></a></h2><p>
       As well as sections marked as non-normative, all authoring guidelines,
       diagrams, examples, and notes in this specification are non-normative.
       Everything else in this specification is normative.
     </p><p>This specification makes use of the compact IRI Syntax; please refer to the
-<a href="https://www.w3.org/TR/json-ld/#compact-iris">Compact IRIs</a> from [<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>].</p></section><section id="typographical-conventions"><!--OddPage--><h2 id="x3-typographical-conventions"><span class="secno">3. </span>Typographical Conventions<a class="self-link" aria-label="§" href="#typographical-conventions"></a></h2><p>The following typographic conventions are used in this specification:</p><dl class="typography">
+<a href="https://www.w3.org/TR/json-ld/#compact-iris">Compact IRIs</a> from [<cite><a class="bibref" href="#bib-json-ld" title="JSON-LD 1.0" data-link-type="biblio">JSON-LD</a></cite>].</p></section><section id="typographical-conventions"><h2 id="x3-typographical-conventions"><bdi class="secno">3. </bdi>Typographical Conventions<a class="self-link" aria-label="§" href="#typographical-conventions"></a></h2><p>The following typographic conventions are used in this specification:</p><dl class="typography">
 <dt><code>markup</code></dt>
 <dd>Markup (elements, attributes, properties), machine processable
 values (string, characters, media types), property name, or a
@@ -787,17 +883,16 @@ header in green. Notes are normative or informative depending on the whether
 they are in a normative or informative section, respectively.</p>
 </div></div><div class="example" id="example-1">
           <div class="marker">
-      <a class="self-link" href="#example-1">Example 1</a>
-    </div>
-          <pre aria-busy="false"><code class="hljs javascript">Examples are <span class="hljs-keyword">in</span> light khaki boxes, <span class="hljs-keyword">with</span> khaki left border, and <span class="hljs-keyword">with</span> a
+      <a class="self-link" href="#example-1">Example<bdi> 1</bdi></a>
+    </div> <pre aria-busy="false"><code class="hljs javascript">Examples are <span class="hljs-keyword">in</span> light khaki boxes, <span class="hljs-keyword">with</span> khaki left border, and <span class="hljs-keyword">with</span> a
 numbered <span class="hljs-string">"Example"</span> header <span class="hljs-keyword">in</span> khaki. Examples are always informative.
 The content <span class="hljs-keyword">of</span> the example is <span class="hljs-keyword">in</span> monospace font and may be syntax colored.</code></pre>
-        </div></section><section id="key-actors"><!--OddPage--><h2 id="x4-key-actors"><span class="secno">4. </span>Key Actors<a class="self-link" aria-label="§" href="#key-actors"></a></h2><dl class="typography">
+        </div></section><section id="key-actors"><h2 id="x4-key-actors"><bdi class="secno">4. </bdi>Key Actors<a class="self-link" aria-label="§" href="#key-actors"></a></h2><dl class="typography">
 <dt><dfn data-dfn-type="dfn" data-plurals="data publishers" id="dfn-data-publisher">Data Publisher</dfn></dt>
 <dd>The application that is publishing the <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a>, that will also be making available open data endpoints and API endpoints for use by the <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a>.</dd>
 <dt><dfn data-dfn-type="dfn" data-plurals="data consumers" id="dfn-data-consumer">Data Consumer</dfn></dt>
 <dd>The application or human that is reading the <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> in order  to make use of the available open data endpoints and API endpoints.</dd>
-</dl></section><section class="normative" id="dataset-site"><!--OddPage--><h2 id="x5-dataset-site"><span class="secno">5. </span>Dataset Site<a class="self-link" aria-label="§" href="#dataset-site"></a></h2><section id="definition"><h3 id="x5-1-definition"><span class="secno">5.1 </span>Definition<a class="self-link" aria-label="§" href="#definition"></a></h3><p>A <dfn data-dfn-type="dfn" data-plurals="dataset sites" id="dfn-dataset-site">Dataset Site</dfn> is a human and machine readable web page ("<dfn data-dfn-type="dfn" id="dfn-dataset-page">Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.</p></section><section id="purpose"><h3 id="x5-2-purpose"><span class="secno">5.2 </span>Purpose<a class="self-link" aria-label="§" href="#purpose"></a></h3><p>The purpose of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> is to provide:</p><ul>
+</dl></section><section class="normative" id="dataset-site"><h2 id="x5-dataset-site"><bdi class="secno">5. </bdi>Dataset Site<a class="self-link" aria-label="§" href="#dataset-site"></a></h2><section id="definition"><h3 id="x5-1-definition"><bdi class="secno">5.1 </bdi>Definition<a class="self-link" aria-label="§" href="#definition"></a></h3><p>A <dfn data-dfn-type="dfn" data-plurals="dataset sites" id="dfn-dataset-site">Dataset Site</dfn> is a human and machine readable web page ("<dfn data-dfn-type="dfn" id="dfn-dataset-page">Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.</p></section><section id="purpose"><h3 id="x5-2-purpose"><bdi class="secno">5.2 </bdi>Purpose<a class="self-link" aria-label="§" href="#purpose"></a></h3><p>The purpose of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> is to provide:</p><ul>
 <li>A web page that can be referenced when discussing the dataset.</li>
 <li>A human and machine readable licence associated with the data (the <a href="#dfn-dataset-page" class="internalDFN" data-link-type="dfn">Dataset Page</a> contains invisible metadata which allows its details to be read automatically).</li>
 <li>A human and machine readable rights statement to specify how dataset users (innovators who want to build on top of/use data) should attribute your data.</li>
@@ -806,11 +901,11 @@ The content <span class="hljs-keyword">of</span> the example is <span class="hlj
 <li>A place where the community can contribute with comments, and raise issues.</li>
 <li>A mechanism by which <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> can subscribe to get updates about changes to the data format, specifications and fields.</li>
 <li>A human and machine readable description of any APIs that can be used to manipulate the data, and the process to gain access to such APIs.</li>
-</ul></section><section id="human-readable-dataset-page"><h3 id="x5-3-human-readable-dataset-page"><span class="secno">5.3 </span>Human-readable Dataset Page<a class="self-link" aria-label="§" href="#human-readable-dataset-page"></a></h3></section><section id="dataset-markup"><h3 id="x5-4-dataset-markup"><span class="secno">5.4 </span>Dataset Markup<a class="self-link" aria-label="§" href="#dataset-markup"></a></h3><section id="json-ld"><h4 id="x5-4-1-json-ld"><span class="secno">5.4.1 </span>JSON-LD<a class="self-link" aria-label="§" href="#json-ld"></a></h4></section><section id="dcat"><h4 id="x5-4-2-dcat"><span class="secno">5.4.2 </span>DCAT<a class="self-link" aria-label="§" href="#dcat"></a></h4></section></section><section id="api-markup"><h3 id="x5-5-api-markup"><span class="secno">5.5 </span>API Markup<a class="self-link" aria-label="§" href="#api-markup"></a></h3></section><section id="json-ld-0"><h3 id="x5-6-json-ld"><span class="secno">5.6 </span>JSON-LD<a class="self-link" aria-label="§" href="#json-ld-0"></a></h3></section><section id="documentation"><h3 id="x5-7-documentation"><span class="secno">5.7 </span>Documentation<a class="self-link" aria-label="§" href="#documentation"></a></h3></section></section><section class="normative" id="future-versions-of-this-api"><!--OddPage--><h2 id="x6-future-versions-of-this-api"><span class="secno">6. </span>Future versions of this API<a class="self-link" aria-label="§" href="#future-versions-of-this-api"></a></h2><p>Future iterations of the specification be shaped by the OpenActive community, and we encourage you to get involved.</p></section><section class="appendix informative" id="acknowledgements"><!--OddPage--><h2 id="a-acknowledgements"><span class="secno">A. </span>Acknowledgements<a class="self-link" aria-label="§" href="#acknowledgements"></a></h2><p><em>This section is non-normative.</em></p><p>The editors thank <a href="https://www.w3.org/community/openactive/participants">all members</a> of the OpenActive Community Group for their contributions.</p></section><script src="//localhost:35729/livereload.js?snipver=1" async="" defer=""></script><section id="references" class="appendix">
-      <!--OddPage--><h2 id="b-references"><span class="secno">B. </span>References<a class="self-link" aria-label="§" href="#references"></a></h2>
+</ul></section><section id="human-readable-dataset-page"><h3 id="x5-3-human-readable-dataset-page"><bdi class="secno">5.3 </bdi>Human-readable Dataset Page<a class="self-link" aria-label="§" href="#human-readable-dataset-page"></a></h3></section><section id="dataset-markup"><h3 id="x5-4-dataset-markup"><bdi class="secno">5.4 </bdi>Dataset Markup<a class="self-link" aria-label="§" href="#dataset-markup"></a></h3><section id="json-ld"><h4 id="x5-4-1-json-ld"><bdi class="secno">5.4.1 </bdi>JSON-LD<a class="self-link" aria-label="§" href="#json-ld"></a></h4></section><section id="dcat"><h4 id="x5-4-2-dcat"><bdi class="secno">5.4.2 </bdi>DCAT<a class="self-link" aria-label="§" href="#dcat"></a></h4></section></section><section id="api-markup"><h3 id="x5-5-api-markup"><bdi class="secno">5.5 </bdi>API Markup<a class="self-link" aria-label="§" href="#api-markup"></a></h3></section><section id="json-ld-0"><h3 id="x5-6-json-ld"><bdi class="secno">5.6 </bdi>JSON-LD<a class="self-link" aria-label="§" href="#json-ld-0"></a></h3></section><section id="documentation"><h3 id="x5-7-documentation"><bdi class="secno">5.7 </bdi>Documentation<a class="self-link" aria-label="§" href="#documentation"></a></h3></section></section><section class="normative" id="future-versions-of-this-api"><h2 id="x6-future-versions-of-this-api"><bdi class="secno">6. </bdi>Future versions of this API<a class="self-link" aria-label="§" href="#future-versions-of-this-api"></a></h2><p>Future iterations of the specification be shaped by the OpenActive community, and we encourage you to get involved.</p></section><section class="appendix informative" id="acknowledgements"><h2 id="a-acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements<a class="self-link" aria-label="§" href="#acknowledgements"></a></h2><p><em>This section is non-normative.</em></p><p>The editors thank <a href="https://www.w3.org/community/openactive/participants">all members</a> of the OpenActive Community Group for their contributions.</p></section><script src="//localhost:35729/livereload.js?snipver=1" async="" defer=""></script><section id="references" class="appendix">
+      <h2 id="b-references"><bdi class="secno">B. </bdi>References<a class="self-link" aria-label="§" href="#references"></a></h2>
       
     <section id="normative-references">
-        <h3 id="b-1-normative-references"><span class="secno">B.1 </span>Normative references<a class="self-link" aria-label="§" href="#normative-references"></a></h3>
+        <h3 id="b-1-normative-references"><bdi class="secno">B.1 </bdi>Normative references<a class="self-link" aria-label="§" href="#normative-references"></a></h3>
       <dl class="bibliography">
         <dt id="bib-json-ld">[JSON-LD]</dt><dd><a href="https://www.w3.org/TR/json-ld/"><cite>JSON-LD 1.0</cite></a>.  W3C. W3C Recommendation. URL: <a href="https://www.w3.org/TR/json-ld/">https://www.w3.org/TR/json-ld/</a></dd>
       </dl></section></section><p role="navigation" id="back-to-top"><a href="#title"><abbr title="Back to Top">↑</abbr></a></p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
