@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+- '10'
+script: bash ./deploy.sh
+branches:
+  only:
+  - master
+env:
+  global:
+  - GH_REF: github.com/openactive/dataset-api-discovery.git
+  - secure: RiXZWa63UVgNsw3ioEA8SysKtNdVbtWUKJYL4UvRdlhu7oLZXEj2+PfHrFMSRmVKaQEHzuhQ0Ztg4Xyy2/Mf9EYBPPZIdwG4pKXKA845ROstmDb7ck7B7gOdGZL9t9vBBRDSglq9Soa0JJT+1E0t1Ln3+ijK5Na752bqpqI6GW8zc6qbAudYusKuF12Ac0quqxY8NnK+mWlsgTDD/XqM7Mpog7xdj+ulTdfPzjkSGrYMRehjmRaft95YY8IraKfTyA/PudIu2hpuV5kZLeO3omDyVJEoCkPDfZllXQnXlwqnG/AFOiUipAQnwfy1vlonmyYa1+gVL8mg6fjP18RkPoz2W153KsrkXjyojb0fLkpEQnZW9YCNJY/AdXxejVT2t+6HWeZAb//353GrFa/pHGoizR+XZXOb8y5vv6bGSqh17cF00qVkAPH94zNpAOIAue9rD0V6qPVounds+Tz75AMJ6HKdbO0sIWv+5FvUAEiQxoB4k7ZFaK2eaIb8+BhIDBgKc7BLLePq+MHjyl4TA+Nx16P9yZYOh2NziZOlWjho9Oij8K6XAa8rz3lUT/gRrajAljI+IJHbF2mBNUESF1LKn+tpcP9+WfXktQ8PxhgX2gu767N6dAgsvnkTp9sgYhjQ+BQstrfAxZb+J8oB6wmsQy53bwmleGnCh210NBI=
