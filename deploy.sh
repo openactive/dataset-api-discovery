@@ -32,15 +32,19 @@ function respec2html {
   }
 }
 
+#####################################################################
+## NOTE: FOR 1.0 RELEASE SIMPLY UNCOMMENT THE TWO 1.0 LINES BELOW  #
+####################################################################
+
 echo Copying static files
-cp -r ../1.0 .
+# cp -r ../1.0 .
 cp -r ../EditorsDraft .
 
 # Remove edit versions
 rm **/edit.html
 
 # Current latest version
-cp -r ../1.0/* .
+# cp -r ../1.0/* .
 
 cd ..
 
