@@ -46,7 +46,6 @@ function dataExampleDatasetEmbed(utils, content) {
         "name": "Slot"
       }
     ],
-    "potentialAction": [potentialActionExampleContent],
     "discussionUrl": "https://github.com/example/opendata/issues",
     "documentation": "https://docs.example.com/",
     "inLanguage": "en-GB",
@@ -66,36 +65,6 @@ function dataExampleDatasetEmbed(utils, content) {
     "schemaVersion": "https://www.openactive.io/modelling-opportunity-data/2.0/"
   });
 }
-
-function dataExamplePotentialAction(utils, content) {
-  return `"potentialAction": ${jsonStringify(potentialActionExampleContent)}`;
-}
-
-
-var potentialActionExampleContent = {
-  "@type": "OpenBookingAction",
-  "target": {
-    "@type": "EntryPoint",
-    "urlTemplate": "https://example.com/api/orders/{uuid}",
-    "encodingType": ["application/vnd.openactive+jsonld; model=2.0, booking=1.0"],
-    "httpMethod": "PUT"
-  },
-  "supportingData": {
-    "@type": "DataFeed",
-    "distribution": [
-      {
-        "@type": "DataDownload",
-        "name": "Order",
-        "additionalType": "https://schema.org/Order",
-        "encodingFormat": ["application/vnd.openactive+json; model=2.0, booking=1.0, rpde=1.0"],
-        "contentUrl": "https://example.com/api/feeds/offers"
-      }
-    ]
-  }
-};
-
-
-
 
 /***** Helper Functions *****/
 
