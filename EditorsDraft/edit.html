@@ -30,7 +30,7 @@
             copyrightStart: 2019,
 
             // editors, add as many as you like
-            // only "name" is required
+            // only "name" is REQUIRED
             editors: [{
                 name: "Leigh Dodds",
                 url: "https://ldodds.com",
@@ -42,6 +42,11 @@
                 url: "https://nickevans.me/",
                 company: "Open Data Institute",
                 companyURL: "https://theodi.org"
+            },
+            {
+                name: "Timothy Hill",
+                company: "Open Data Institute",
+                companyURL: "https://theodi.org",
             }],
 
             otherLinks: [{
@@ -273,16 +278,16 @@ developing standards that will promote the publication and use of open
 [opportunity data](https://openactive.io/modelling-opportunity-data/#categories-of-physical-activity-data)
 in helping people to become more physically active.
 
-This specification aims to build on existing work by the [WebAPI Discovery Community Group](https://www.w3.org/community/web-api-discovery/) and the [Schema.org discussion](https://github.com/schemaorg/schemaorg/issues/1423), providing a profile and guidance specifically both for open data publishers and implementers of Web APIs that manipulate openly available datasets. It also aims to provide conformance rules to ensure that implementers include the details necessary to allow <a>Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.
+This specification aims to build on existing work by the [WebAPI Discovery Community Group](https://www.w3.org/community/web-api-discovery/), the W3C's [DCAT standard](https://www.w3.org/TR/vocab-dcat-2/), and the [Schema.org discussion](https://github.com/schemaorg/schemaorg/issues/1423), providing a profile and guidance specifically both for open data publishers and implementers of Web APIs that manipulate openly available datasets. It also aims to provide conformance rules to ensure that implementers include the details necessary to allow a <a>Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.
 
-The specification defines the requirements of a <a>Dataset Site</a> provided by a <a>Data Publisher</a> (server) for use by a <a>Data Consumer</a> (client). It includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.
+The specification defines both the requirements of a <a>Dataset Site</a> provided by a <a>Data Publisher</a> (server) for use by a <a>Data Consumer</a> (client), and of any <a>Data Catalog</a> designed to enable discovery of such sites. In addition, it includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.
 
 ## Scope and requirements
 
 <a>Dataset Sites</a> that conform to this specification will be:
 - __Schema.org compatible__ - Remain fully compatible with schema.org, and machine-readable by <a>Data Consumers</a> that can read [Schema.org Dataset](https://schema.org/Dataset) and future [Schema.org WebAPI](https://schema.org/WebAPI) embedded JSON-LD.
+- __DCAT compatible__ - By ensuring that as much of the schema.org markup as possible conforms to the DCAT group's [recommended mappings](https://www.w3.org/TR/vocab-dcat-2/#dcat-sdo) between schema.org and DCAT version 2 .
 - __Google compatible__ - Use embedded JSON-LD to enable indexing by [Google Dataset Search](https://developers.google.com/search/docs/data-types/dataset), and any [future Google `WebAPI` Search](https://blog.apis.guru/api-discovery-can-we-do-better-2336706d5407).
-- __DCAT compatible__ - Include DCAT markup to ensure compatibility with the widest range of open data catalogues.
 - __Sufficient for automated integration__ - Allow <a>Data Consumer</a>s to reliably integrate with services that are compliant with a standardised [API specification](https://nordicapis.com/difference-api-documentation-specification-definition/) (e.g. a Swagger specification) without requiring additional configuration or human intervention.
 - __Human readable__ - Include human-readable content to allow developers to successfully integrate discover, consume and integrate with the <a>Data Publisher's</a> dataset and API.
 - __Interactive__ - Include a mechanism for <a>Data Consumers</a> to provide feedback to <a>Data Publishers</a> in the open, and subscribe to updates from <a>Data Publishers</a>.
@@ -293,6 +298,12 @@ The specification defines the requirements of a <a>Dataset Site</a> provided by 
 - The specific defined profiles of any specification that are supported, both for any Web APIs defined, but also for any open datasets.
 - Where conformance is verified via third-party or self-certification, a statement of the level of conformance, and reference to evidence of this.
 
+<a>Data Catalogs</a> published in accordance with this standard will
+
+- __Schema.org compatible__ - Remain fully compatible with schema.org, and machine-readable by <a>Data Consumers</a> that can read [Schema.org Dataset](https://schema.org/Dataset) and future [Schema.org WebAPI](https://schema.org/WebAPI) embedded JSON-LD.
+- __DCAT compatible__ - By ensuring that as much of the schema.org markup as possible conforms to the DCAT group's [recommended mappings](https://www.w3.org/TR/vocab-dcat-2/#dcat-sdo) between schema.org and DCAT version 2 .
+- __Sufficient for automated integration__ - Allow <a>Data Consumer</a>s to reliably integrate with services that are compliant with a standardised [API specification](https://nordicapis.com/difference-api-documentation-specification-definition/) (e.g. a Swagger specification) without requiring additional configuration or human intervention.-
+
 Note that although this specification of the [OpenActive Community Group](https://www.w3.org/community/openactive/), it is designed to apply to any open dataset where an API is available to manipulate it.
 
 ### Functionality that is out of scope
@@ -302,7 +313,7 @@ By design this specification will not define some types of functionality.
 These have been declared as permanently out of scope because they are
 adequately covered by existing specifications:
 
-* __API documentation__ - each system should provide its own documentation, the specification only requires that such documentation exists.
+* __API documentation__ - each system should provide its own documentation, the specification only requires that such documentation exist.
 * __API specification and API definition__ - many existing formats are available for API specification (e.g. Swagger, RAML, etc.).
 
 ## Audience
@@ -394,9 +405,99 @@ The purpose of a <a>Dataset Site</a> is to provide:
 
 ## Human-readable Dataset Page
 
+All attributes here are RECOMMENDED.
+
+|CSS Selector|Attribute|Value|Notes|
+|-------------|---------|-----|-----|
+|`head/title`|`content`|[publisher name] Open Data||
+|`head/meta[name='title']`|`content`|[publisher name] Open Data||
+|`head/meta[name='identifier']`|`content`|URL of the dataset site||
+|`head/meta[name='description']`|`content`|Description of the site and its datasets||
+|`body/div#wrapper`|`typeof`|`dcat:Dataset`||
+|`body/div#wrapper`|`resource`|URL of the dataset site||
+|`body/section[#main]/header/div/a`|`property`|`foaf:homepage`||
+|`body/section[#main]/header/div/a`|`href`|URL of the publisher's homepage||
+|`body/section[#main]/header/div/a`|`about`|URL of the publisher's homepage||
+|`body/section[#main]/header/div/a/span`|`foaf:name`|Publisher's name||
+|`body/section[#main]/header/h2`|`property`|dct:title||
+|`body/section[#main]/header/p.metadata[property='dct:created']`|`content`|dct:title|Date of site publication|
+|`body/section[#main]/header/a.metadata[property='accrualPeriodicity']`|TEXT|Text|Frequency of update|
+|`body/section[#main]/header/ul/li.fa-comments]`|`href`|URL|Link to discussion forum and other feedback provision|
+|`body/section[#main]/header/ul/li.fa-info`|`href`|URL|Link to documentation|
+|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']`|`href`|URL|Link to RPDE feed|
+|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span[property='dct:title']`|`href`|Name of the dataset linked to||
+|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span.metadata[property='dcat:mediaType']`|`content`|MIME type of the linked resource||
+|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span.metadata[property='dcat:mediaType']`|TEXT|Declaration of RPDE and Opportunity specification conformance||
+|`body/section[#main]/footer/div.license/span[property='dct:license']`|`resource`|URL of release license (for OpenActive, normally CC-BY c4.0)|
+|`body/section[#main]/footer/div.license/span[property='dct:rights'][typeof='odrs:RightsStatement']`|CHILD|`<a href="[url]" property="odrs:attributionURL"><span property="odrs:attributionText">[publisher name]</span></a>`|
+
 ## Dataset Site Markup
 
-### JSON-LD
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`|
+|@type|REQUIRED|Text|`Dataset`|
+|@id|RECOMMENDED|URL|A URL uniquely identifying the dataset site resource.|
+|url|REQUIRED|URL|Typically the URL of the dataset site itself.|
+|name|REQUIRED|Text|The name of the collection of datasets referenced by the site. Often this will simply be the name of the publishing organisation.|
+|description|RECOMMENDED|Text|A human-readable description of the datasets referenced by the site.|
+|keywords|OPTIONAL|Array of Text|Short descriptive metadata tags for the dataset collection.|
+|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|distribution|REQUIRED|Array of `dcat:Distribution` object|See below, Describing Individual Feeds|
+|discussionUrl|RECOMMENDED|URL|A link to a resource for discussing and raising issues with the published datasets. Typically, although not necessarily, this will be a link to a GitHub repository.|
+|documentation|RECOMMENDED|Array of URL|Link(s) to further resources concerning the dataset site and its referenced datasets - e.g., GitHub READMEs or status summaries.|
+|inLanguage|OPTIONAL|String|The language of the dataset. Should be expressed as an ISO 639-2 language code.|
+|publisher|REQUIRED|schema:Organization|The organization responsible for publishing the collection of datasets linked to by the dataset site. For further information, see below, Describing Organizations.|
+|datePublished|REQUIRED|schema:Date|The date the dataset site was published.|
+|schemaVersion|REQUIRED|URL|The version of the dataset site specification to which the site conforms.|
+|softwareVersion|RECOMMENDED|URL|A link to a repository holding the code by which the site was generated.|
+
+### Describing Individual Feeds (`dcat:Distribution` objects)
+
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@type|REQUIRED|Text|`DataDownload`|
+|name|RECOMMENDED|Text|A human-readable name for the dataset.|
+|additionalType|OPTIONAL|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
+|encodingFormat|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
+|contentUrl|REQUIRED|URL|The URL of the feed containing the dataset.|
+
+### Supporting Booking (`schema:webAPI`)
+
+In addition to the above markup for discoverability, dataset sites that support Open Booking API functionality MUST indicate this with markup enabling discovery and use of the relevant API endpoints.
+
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@type|REQUIRED|Text|`WebAPI`|
+|name|RECOMMENDED|Text|A human-readable name for the dataset.|
+|description|OPTIONAL|Text|A human-readable description of the API|
+|documentation|RECOMMENDED|schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
+|termsOfService|REQUIRED|Text or URL|Human-readable terms of service documentation.|
+|provider|REQUIRED|schema:Organization|The Organization providing the API endpoint.|
+|endpointUrl|REQUIRED|URL|The root location or primary endpoint of the API.|
+|conformsTo|RECOMMENDED|URL|The URL reference of an established standard to which the described API conforms.|
+|version|RECOMMENDED|Text|The version of the URL.|
+|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|endpointDescription|RECOMMENDED|schema:CreativeWork|A machine-readable description of the API. See Describing API Endpoints, below|
+
+#### Describing API Endpoints (`schema:CreativeWork`)
+
+Supporting documentation is crucial for the successful uptake and use of APIs. Ideally, both human-readable freetext and machine-readable structured data are made available.
+
+The schema.org objects for human- and machine-readable documents are largely identical in terms of content and structure. However, the MIME-type associated with each will normally differ.
+
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@type|REQUIRED|Text|`CreativeWork`|
+|url|REQUIRED|URL|A URL pointing to supporting documentation for the API.|
+|encodingFormat|RECOMMENDED|Text|The MIME-type delivered by the url. For human-readable documentation (`schema:documentation`) this will normally be `text/html`; for machine-readable documentation (`schema:endpointUrl`), `application/json` or a more-specific subtype of this.|
+|documentation|RECOMMENDED|schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
+
+<div class="note">
+The `schema:WebAPI` specification has been assigned Pending status by the schema.org organisation, and is scheduled for release in schema version 10.0.  While `schema:WebAPI` is relatively stable, then, points of details are still subject to review and this specification may change at short notice.
+</div>
+
+<!--### JSON-LD
 
 <pre class="example" title="Dataset Site JSON-LD Markup" data-transform="dataExampleDatasetEmbed">
 </pre>
@@ -406,12 +507,31 @@ The purpose of a <a>Dataset Site</a> is to provide:
 ## API Documentation
 
 ### Open API
+-->
+## Discoverability and Dataset Sites (using `schema:DataCatalog`)
 
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`|
+|@type|REQUIRED|String|`DataCatalog`|
+|@id|RECOMMENDED|URL|A unique identifier for the DataCatalog, often identical to the URL at which the DataCatalog is found.|
+|dataPublished|RECOMMENDED|`schema:Date`|The date the `DataCatalog` was published.|
+|publisher|RECOMMENDED|`schema:Organization`|The `Organization` responsible for publishing the DataCatalog.|
+|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|dataset|REQUIRED if `hasPart` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to OpenActive Dataset Sites.|
+|hasPart|REQUIRED if `dataset` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to other OpenActive DataCatalogs.|
+
+### Describing Publishers (`schema:Organization`)
+
+|Property|Status|Type|Notes|
+|--------|------|----|-----|
+|@type|REQUIRED|Text|`Organization`|
+|name|RECOMMENDED|Text|The name of the `Organization` publishing the datasets.|
+|logo|OPTIONAL|URL|A link to the publishing `Organization`'s logo.|
+|url|RECOMMENDED|URL|A link to the publishing `Organization`'s website.|
 
 
 </section>
-
-
 
 
 <section class="normative">
