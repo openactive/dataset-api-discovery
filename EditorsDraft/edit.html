@@ -298,7 +298,7 @@ The specification defines both the requirements of a <a>Dataset Site</a> provide
 - The specific defined profiles of any specification that are supported, both for any Web APIs defined, but also for any open datasets.
 - Where conformance is verified via third-party or self-certification, a statement of the level of conformance, and reference to evidence of this.
 
-**Data Catalogs** published in accordance with this standard will
+**Data Catalogs** published in accordance with this standard will be
 
 - __Schema.org compatible__ - Remain fully compatible with schema.org, and machine-readable by <a>Data Consumers</a> that can read [Schema.org Dataset](https://schema.org/Dataset) and future [Schema.org WebAPI](https://schema.org/WebAPI) embedded JSON-LD.
 - __DCAT compatible__ - By ensuring that as much of the schema.org markup as possible conforms to the DCAT group's [recommended mappings](https://www.w3.org/TR/vocab-dcat-2/#dcat-sdo) between schema.org and DCAT version 2 .
@@ -383,13 +383,19 @@ The content of the example is in monospace font and may be syntax colored.
 
 <section class="normative">
 
-# Dataset Site
+# Definitions
 
-## Definition
+## Dataset Sites
 
 A <dfn>Dataset Site</dfn> is a human and machine readable web page ("<dfn>Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.
 
-## Purpose
+## Data Catalogs
+
+A <dfn>Data Catalog</dfn> is a JSON structure that supports and enables the discoverability of `Dataset Sites`. They do so by providing metadata and links, either to `Dataset sites` directly or to other `Data Catalogs`.
+
+# Purpose
+
+## Dataset Sites
 
 The purpose of a <a>Dataset Site</a> is to provide:
 
@@ -402,42 +408,72 @@ The purpose of a <a>Dataset Site</a> is to provide:
 * A mechanism by which <a>Data Consumers</a> can subscribe to get updates about changes to the data format, specifications and fields.
 * A human and machine readable description of any APIs that can be used to manipulate the data, and the process to gain access to such APIs.
 
+## Data Catalogs
 
-## Human-readable Dataset Page
+The purpose of a <a>Data Catalog</a> is to provide:
 
-All attributes here are RECOMMENDED.
+* machine-readable metadata about dataset sites
+* URL(s) pointing to dataset sites
+* machine-readable metadata about, and URLS pointing to, other `Data Catalogs` where appropriate
+* a start-point for spidering of data collections
 
-|CSS Selector|Attribute|Value|Notes|
-|-------------|---------|-----|-----|
-|`head/title`|`content`|[publisher name] Open Data||
-|`head/meta[name='title']`|`content`|[publisher name] Open Data||
-|`head/meta[name='identifier']`|`content`|URL of the dataset site||
-|`head/meta[name='description']`|`content`|Description of the site and its datasets||
-|`body/div#wrapper`|`typeof`|`dcat:Dataset`||
-|`body/div#wrapper`|`resource`|URL of the dataset site||
-|`body/section[#main]/header/div/a`|`property`|`foaf:homepage`||
-|`body/section[#main]/header/div/a`|`href`|URL of the publisher's homepage||
-|`body/section[#main]/header/div/a`|`about`|URL of the publisher's homepage||
-|`body/section[#main]/header/div/a/span`|`foaf:name`|Publisher's name||
-|`body/section[#main]/header/h2`|`property`|dct:title||
-|`body/section[#main]/header/p.metadata[property='dct:created']`|`content`|dct:title|Date of site publication|
-|`body/section[#main]/header/a.metadata[property='accrualPeriodicity']`|TEXT|Text|Frequency of update|
-|`body/section[#main]/header/ul/li.fa-comments]`|`href`|URL|Link to discussion forum and other feedback provision|
-|`body/section[#main]/header/ul/li.fa-info`|`href`|URL|Link to documentation|
-|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']`|`href`|URL|Link to RPDE feed|
-|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span[property='dct:title']`|`href`|Name of the dataset linked to||
-|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span.metadata[property='dcat:mediaType']`|`content`|MIME type of the linked resource||
-|`body/section[#main]/header/ul.download/li/a[property='dcat:distribution'][typeof='dcat:Distribution']/span.metadata[property='dcat:mediaType']`|TEXT|Declaration of RPDE and Opportunity specification conformance||
-|`body/section[#main]/footer/div.license/span[property='dct:license']`|`resource`|URL of release license (for OpenActive, normally CC-BY c4.0)|
-|`body/section[#main]/footer/div.license/span[property='dct:rights'][typeof='odrs:RightsStatement']`|CHILD|`<a href="[url]" property="odrs:attributionURL"><span property="odrs:attributionText">[publisher name]</span></a>`|
+## Dataset Sites
 
-## Dataset Site Markup
+### HTML Content
+
+#### Human-readable content
+
+With the exception of licensing information, there are no strong requirements for the human-readable content of dataset pages, and implementers may provide whatever information they see fit here. For the convenience of end-users, however, it is normally expected that a `Dataset Page` will provide **at least** the following information and markup:
+
+* the name of the organisation publishing the data
+* the standards to which the published data conforms (e.g., the Opportunity standard)
+* the version of each of these standards (e.g., '2.0')
+* where a link to a data feed is provided, their text should refer to the entity types this feed contains (e.g. `SessionSeries`, `Slots`)
+* an appropriately-labelled link to documentation relevant to the data feed(s)
+* an appropriately-labelled link to a discussion channel for the data feed(s)
+* licensing information
+
+Note that, of the list above, only licensing information is REQUIRED to be available in human-readable form, and this license MUST be a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) (often abbreviated as 'cc-by').
+
+Note further that, in the event that you are republishing OpenActive data from another source, the original publisher must be credited as per the terms of this license.
+
+#### HTML `meta` tags
+
+In addition to the directly-readable content of the HTML `<body>`, information contained in the HTML `<head>` may sometimes be used by search engines and social-media platforms to aid findability and provide snippets.
+
+It is accordingly RECOMMENDED that the following `<meta>` tags be supplied.
+
+|Property|Value|
+|-------------------------|-----------------------------|
+|title|The name of the publishing organisation, followed by the string ' Open Data'.|
+|identifier|The URL of the dataset site.|
+|keywords|Short, descriptive words or phrases to aid discoverability|
+|description|A human-readable description of the dataset.|
+|language|The language of the dataset site.|
+
+#### OpenGraph `<meta>` tags
+
+OpenGraph is a [protocol](https://ogp.me/) created by Facebook that allows useful snippets to be extracted on social media platforms, including also LinkedIn and Twitter.
+
+The following OpenGraph properties are RECOMMENDED for use in `<meta>` elements in the HTML `head` of <a>Dataset Pages</a>.
+
+|Property|Value|
+|-------------------------|-----------------------------|
+|`og:title` |The name of the publishing organisation, followed by the string ' Open Data'.|
+|`og:description`|A human-readable description of the dataset.|
+|`og:locale`|For publishers within the UK, this should be 'en_GB'.|
+|`og:url`|The URL of the dataset site.|
+|`og:image`|The logo of the publishing organisation|
+
+### Embedded JSON
+
+<a>Dataset Sites</a> must be machine-readable via embedded JSON-LD.
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
 |@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`|
 |@type|REQUIRED|Text|`Dataset`|
-|@id|RECOMMENDED|URL|A URL uniquely identifying the dataset site resource.|
+|@id|REQUIRED|URL|A URL uniquely identifying the dataset site resource. May be the URL of the <a>Dataset Site</a> itself|
 |url|REQUIRED|URL|Typically the URL of the dataset site itself.|
 |name|REQUIRED|Text|The name of the collection of datasets referenced by the site. Often this will simply be the name of the publishing organisation.|
 |description|RECOMMENDED|Text|A human-readable description of the datasets referenced by the site.|
@@ -446,23 +482,25 @@ All attributes here are RECOMMENDED.
 |distribution|REQUIRED|Array of `dcat:Distribution` object|See below, Describing Individual Feeds|
 |discussionUrl|RECOMMENDED|URL|A link to a resource for discussing and raising issues with the published datasets. Typically, although not necessarily, this will be a link to a GitHub repository.|
 |documentation|RECOMMENDED|Array of URL|Link(s) to further resources concerning the dataset site and its referenced datasets - e.g., GitHub READMEs or status summaries.|
-|inLanguage|OPTIONAL|String|The language of the dataset. Should be expressed as an ISO 639-2 language code.|
+|inLanguage|RECOMMENDED|String|The language of the dataset. Should be expressed as an ISO 639-2 language code.|
 |publisher|REQUIRED|schema:Organization|The organization responsible for publishing the collection of datasets linked to by the dataset site. For further information, see below, Describing Organizations.|
 |datePublished|REQUIRED|schema:Date|The date the dataset site was published.|
 |schemaVersion|REQUIRED|URL|The version of the dataset site specification to which the site conforms.|
 |softwareVersion|RECOMMENDED|URL|A link to a repository holding the code by which the site was generated.|
 
-### Describing Individual Feeds (`dcat:Distribution` objects)
+The MIME-type of this JSON object MUST be `application/ld+json`.
+
+#### Describing Individual Feeds (`dcat:Distribution` objects)
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
 |@type|REQUIRED|Text|`DataDownload`|
-|name|RECOMMENDED|Text|A human-readable name for the dataset.|
-|additionalType|OPTIONAL|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
+|name|REQUIRED|Text|A human-readable name for the dataset.|
+|additionalType|RECOMMENDED|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
 |encodingFormat|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
 |contentUrl|REQUIRED|URL|The URL of the feed containing the dataset.|
 
-### Supporting Booking (`schema:webAPI`)
+#### Supporting Booking (`schema:webAPI`)
 
 In addition to the above markup for discoverability, dataset sites that support Open Booking API functionality MUST indicate this with markup enabling discovery and use of the relevant API endpoints.
 
@@ -471,7 +509,7 @@ In addition to the above markup for discoverability, dataset sites that support 
 |@type|REQUIRED|Text|`WebAPI`|
 |name|RECOMMENDED|Text|A human-readable name for the dataset.|
 |description|OPTIONAL|Text|A human-readable description of the API|
-|documentation|RECOMMENDED|schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
+|documentation|RECOMMENDED|URL or schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
 |termsOfService|REQUIRED|Text or URL|Human-readable terms of service documentation.|
 |provider|REQUIRED|schema:Organization|The Organization providing the API endpoint.|
 |endpointUrl|REQUIRED|URL|The root location or primary endpoint of the API.|
@@ -491,24 +529,203 @@ The schema.org objects for human- and machine-readable documents are largely ide
 |@type|REQUIRED|Text|`CreativeWork`|
 |url|REQUIRED|URL|A URL pointing to supporting documentation for the API.|
 |encodingFormat|RECOMMENDED|Text|The MIME-type delivered by the url. For human-readable documentation (`schema:documentation`) this will normally be `text/html`; for machine-readable documentation (`schema:endpointUrl`), `application/json` or a more-specific subtype of this.|
-|documentation|RECOMMENDED|schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
+
 
 <div class="note">
 The `schema:WebAPI` specification has been assigned Pending status by the schema.org organisation, and is scheduled for release in schema version 10.0.  While `schema:WebAPI` is relatively stable, then, points of details are still subject to review and this specification may change at short notice.
 </div>
 
-<!--### JSON-LD
+#### Worked Example
 
-<pre class="example" title="Dataset Site JSON-LD Markup" data-transform="dataExampleDatasetEmbed">
-</pre>
+The below illustrates a <dfn>Dataset Site</dfn> pointing to feeds consisting of `ScheduledSessions`, `SessionSeries`, and `Events`. As the presence of the `webAPI` attribute indicates, data items from these feeds are bookable.
 
-### DCAT
+```
+{
+   "@context":[
+      "https://schema.org",
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+   ],
+   "@type":"Dataset",
+   "@id":"https://data.example.com/",
+   "name":"Example Sessions and Events",
+   "description":"Near real-time availability and rich descriptions relating to sessions and events available from Example.com",
+   "url":"https://data.example.com/",
+   "dateModified":"2019-08-25T11:23:27+00:00",
+   "keywords":[
+      "Courses",
+      "Sessions",
+      "Events",
+      "Activities",
+      "Sports",
+      "Physical Activity",
+      "OpenActive"
+   ],
+   "schemaVersion":"https://www.openactive.io/modelling-opportunity-data/2.0/",
+   "license":"https://creativecommons.org/licenses/by/4.0/",
+   "publisher":{
+      "@type":"Organization",
+      "name":"Example.com",
+      "description":"Example.com makes it easy to get active!",
+      "url":"https://example.com/home",
+      "legalName":"Example Ltd",
+      "logo":{
+         "@type":"ImageObject",
+         "url":"https://cdn.example.com/assets/logo.png"
+      },
+      "email":"support@example.com"
+   },
+   "discussionUrl":"https://github.com/example/repo/issues",
+   "datePublished":"2019-07-11T00:00:00+00:00",
+   "inLanguage":[
+      "en-GB"
+   ],
+   "distribution":[
+      {
+         "@type":"DataDownload",
+         "name":"ScheduledSession",
+         "additionalType":"https://openactive.io/ScheduledSession",
+         "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
+         "contentUrl":"https://example.com/api/openactive/scheduledsessions"
+      },
+      {
+         "@type":"DataDownload",
+         "name":"SessionSeries",
+         "additionalType":"https://openactive.io/SessionSeries",
+         "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
+         "contentUrl":"https://example.com/api/openactive/sessionseries"
+      },
+      {
+         "@type":"DataDownload",
+         "name":"Event",
+         "additionalType":"https://schema.org/Event",
+         "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
+         "contentUrl":"https://example.com/api/openactive/events"
+      }
+   ],
+   "backgroundImage":{
+      "@type":"ImageObject",
+      "url":"https://cdn.example.com/images/background.jpg"
+   },
+   "documentation":"https://developer.openactive.io/",
+   "webAPI":[
+      {
+         "@type":"WebAPI",
+         "name":"Order Quote Creation - C1",
+         "documentation":"https://openactive.io/open-booking-api/#dfn-c1",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/order-quote-templates/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Quote Creation - C2",
+         "documentation":"https://openactive.io/open-booking-api/#orderquote-creation-c2",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/order-quotes/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Quote Deletion",
+         "documentation":"https://openactive.io/open-booking-api/#orderquote-deletion",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/order-quotes/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"OrderProposal Creation",
+         "documentation":"https://openactive.io/open-booking-api/#orderproposal-creation-p",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/order-proposals/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Proposal Update",
+         "documentation":"https://openactive.io/open-booking-api/#orderproposal-update",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/order-proposals/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Creation - B",
+         "documentation":"https://openactive.io/open-booking-api/#order-creation-b",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Deletion",
+         "documentation":"https://openactive.io/open-booking-api/#order-deletion",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Cancellation",
+         "documentation":"https://openactive.io/open-booking-api/#order-cancellation",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Orders RPDE Feed",
+         "documentation":"https://openactive.io/open-booking-api/#orders-rpde-feed",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/orders-rpde",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+         "@type":"WebAPI",
+         "name":"Order Status",
+         "documentation":"https://openactive.io/open-booking-api/#order-status",
+         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+         "provider":"Example.com",
+         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
+         "conformsTo":"https://openactive.io/open-booking-api/",
+         "version":"2.0",
+         "license":"https://creativecommons.org/licenses/by/4.0/"
+      }
+   ]
+}
+```
 
-## API Documentation
-
-### Open API
--->
 ## Discoverability and Dataset Sites (using `schema:DataCatalog`)
+
+<a>Data Catalogs</a> will normally be published as JSON-LD objects accessible via a URL.
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
@@ -529,7 +746,6 @@ The `schema:WebAPI` specification has been assigned Pending status by the schema
 |name|RECOMMENDED|Text|The name of the `Organization` publishing the datasets.|
 |logo|OPTIONAL|URL|A link to the publishing `Organization`'s logo.|
 |url|RECOMMENDED|URL|A link to the publishing `Organization`'s website.|
-
 
 </section>
 
