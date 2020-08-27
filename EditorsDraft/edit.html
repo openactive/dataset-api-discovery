@@ -608,120 +608,23 @@ The below illustrates a <dfn>Dataset Site</dfn> pointing to feeds consisting of 
       "url":"https://cdn.example.com/images/background.jpg"
    },
    "documentation":"https://developer.openactive.io/",
-   "webAPI":[
-      {
-         "@type":"WebAPI",
-         "name":"Order Quote Creation - C1",
-         "documentation":"https://openactive.io/open-booking-api/#dfn-c1",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/order-quote-templates/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Quote Creation - C2",
-         "documentation":"https://openactive.io/open-booking-api/#orderquote-creation-c2",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/order-quotes/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Quote Deletion",
-         "documentation":"https://openactive.io/open-booking-api/#orderquote-deletion",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/order-quotes/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"OrderProposal Creation",
-         "documentation":"https://openactive.io/open-booking-api/#orderproposal-creation-p",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/order-proposals/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Proposal Update",
-         "documentation":"https://openactive.io/open-booking-api/#orderproposal-update",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/order-proposals/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Creation - B",
-         "documentation":"https://openactive.io/open-booking-api/#order-creation-b",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Deletion",
-         "documentation":"https://openactive.io/open-booking-api/#order-deletion",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Cancellation",
-         "documentation":"https://openactive.io/open-booking-api/#order-cancellation",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Orders RPDE Feed",
-         "documentation":"https://openactive.io/open-booking-api/#orders-rpde-feed",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/orders-rpde",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      },
-      {
-         "@type":"WebAPI",
-         "name":"Order Status",
-         "documentation":"https://openactive.io/open-booking-api/#order-status",
-         "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
-         "provider":"Example.com",
-         "endpointUrl":"https://example.com/api/booking/orders/{uuid}",
-         "conformsTo":"https://openactive.io/open-booking-api/",
-         "version":"2.0",
-         "license":"https://creativecommons.org/licenses/by/4.0/"
-      }
-   ]
+   "accessService":{
+      "@type":"WebAPI",
+      "name":"Open Booking API",
+      "description":"The Open Booking API lets you to book OpenActive Opportunities. The API uses standard schema.org types and is compliant with the JSON-LD specification.",
+      "documentation":"https://openactive.io/open-booking-api/EditorsDraft",
+      "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+      "endpointUrl":"https://example.com/api/booking/",
+      "conformsTo":[
+         "https://www.openactive.io/open-booking-api/2.0/"
+      ],
+      "endpointDescription":"https://www.openactive.io/open-booking-api/2.0/swagger.json"
+   }
 }
 ```
+
+
+
 
 ## Discoverability and Dataset Sites (using `schema:DataCatalog`)
 
