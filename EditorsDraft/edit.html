@@ -385,17 +385,17 @@ The content of the example is in monospace font and may be syntax colored.
 
 # Definitions
 
-## Dataset Sites: Definition
+## Dataset Sites
 
 A <dfn>Dataset Site</dfn> is a human and machine readable web page ("<dfn>Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.
 
-## Data Catalogs: Definition
+## Data Catalogs
 
 A <dfn>Data Catalog</dfn> is a JSON structure that supports and enables the discoverability of `Dataset Sites`. They do so by providing metadata and links, either to `Dataset sites` directly or to other `Data Catalogs`.
 
 # Purpose
 
-## Dataset Sites: Purpose
+## Dataset Sites
 
 The purpose of a <a>Dataset Site</a> is to provide:
 
@@ -408,7 +408,7 @@ The purpose of a <a>Dataset Site</a> is to provide:
 * A mechanism by which <a>Data Consumers</a> can subscribe to get updates about changes to the data format, specifications and fields.
 * A human and machine readable description of any APIs that can be used to manipulate the data, and the process to gain access to such APIs.
 
-## Data Catalogs: Purpose
+## Data Catalogs
 
 The purpose of a <a>Data Catalog</a> is to provide:
 
@@ -417,11 +417,11 @@ The purpose of a <a>Data Catalog</a> is to provide:
 * machine-readable metadata about, and URLS pointing to, other `Data Catalogs` where appropriate
 * a start-point for spidering of data collections
 
-## Dataset Sites
+# Dataset Sites
 
-### HTML Content
+## HTML Content
 
-#### Human-readable content
+### Human-readable content
 
 With the exception of licensing information, there are no strong requirements for the human-readable content of dataset pages, and implementers may provide whatever information they see fit here. For the convenience of end-users, however, it is normally expected that a `Dataset Page` will provide **at least** the following information and markup:
 
@@ -437,7 +437,7 @@ Note that, of the list above, only licensing information is REQUIRED to be avail
 
 Note further that, in the event that you are republishing OpenActive data from another source, the original publisher must be credited as per the terms of this license.
 
-#### HTML `meta` tags
+### HTML `meta` tags
 
 In addition to the directly-readable content of the HTML `<body>`, information contained in the HTML `<head>` may sometimes be used by search engines and social-media platforms to aid findability and provide snippets.
 
@@ -451,7 +451,7 @@ It is accordingly RECOMMENDED that the following `<meta>` tags be supplied.
 |description|A human-readable description of the dataset.|
 |language|The language of the dataset site.|
 
-#### OpenGraph `<meta>` tags
+### OpenGraph `<meta>` tags
 
 OpenGraph is a [protocol](https://ogp.me/) created by Facebook that allows useful snippets to be extracted on social media platforms, including also LinkedIn and Twitter.
 
@@ -465,7 +465,7 @@ The following OpenGraph properties are RECOMMENDED for use in `<meta>` elements 
 |`og:url`|The URL of the dataset site.|
 |`og:image`|The logo of the publishing organisation|
 
-### Embedded JSON
+## Embedded JSON
 
 <a>Dataset Sites</a> must be machine-readable via embedded JSON-LD.
 
@@ -490,7 +490,7 @@ The following OpenGraph properties are RECOMMENDED for use in `<meta>` elements 
 
 The MIME-type of this JSON object MUST be `application/ld+json`.
 
-#### Describing Individual Feeds (`dcat:Distribution` objects)
+### Describing Individual Feeds (`dcat:Distribution` objects)
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
@@ -500,7 +500,7 @@ The MIME-type of this JSON object MUST be `application/ld+json`.
 |encodingFormat|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
 |contentUrl|REQUIRED|URL|The URL of the feed containing the dataset.|
 
-#### Supporting Booking (`schema:webAPI`)
+### Supporting Booking (`schema:webAPI`)
 
 In addition to the above markup for discoverability, dataset sites that support Open Booking API functionality MUST indicate this with markup enabling discovery and use of the relevant API endpoints.
 
@@ -518,7 +518,7 @@ In addition to the above markup for discoverability, dataset sites that support 
 |license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
 |endpointDescription|RECOMMENDED|schema:CreativeWork|A machine-readable description of the API. See Describing API Endpoints, below|
 
-#### Describing API Endpoints (`schema:CreativeWork`)
+### Describing API Endpoints (`schema:CreativeWork`)
 
 Supporting documentation is crucial for the successful uptake and use of APIs. Ideally, both human-readable freetext and machine-readable structured data are made available.
 
