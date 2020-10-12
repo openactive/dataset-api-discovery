@@ -499,6 +499,7 @@ The MIME-type of this JSON object MUST be `application/ld+json`.
 |additionalType|RECOMMENDED|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
 |encodingFormat|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
 |contentUrl|REQUIRED|URL|The URL of the feed containing the dataset.|
+|totalItems|RECOMMENDED|Integer|The total number of items that can be expected in the feed. Note that this number will often be approximate only, given the rapidity with which updates may be made to backend datastores.|
 
 ### Supporting Booking (`schema:webAPI`)
 
@@ -649,6 +650,23 @@ The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `Sch
 |name|RECOMMENDED|Text|The name of the `Organization` publishing the datasets.|
 |logo|OPTIONAL|URL|A link to the publishing `Organization`'s logo.|
 |url|RECOMMENDED|URL|A link to the publishing `Organization`'s website.|
+
+## Removing data feeds
+
+### Data Publishers
+
+In the event that a feed is to be removed permanently, publishers MUST:
+
+1. Remove the link to the feed from their dataset site
+1. Ensure that the feed URL return a 410 ('Gone') status code, indicating that the feed has been permanently removed. This response should be returned for a period of at least seven (7) days from the date of initial removal, in order to ensure that all consuming applications receive an explicit indication of removal within a reasonable timeframe.
+
+After this point, the feed URL MAY return a 404 response in place of the 410 code.
+
+Temporary removal of a feed should be indicated by a 404 response.
+
+### Data Consumers
+
+In the event that a consuming application receives a 410 response from a previously-harvested feed URL, all records associated with that feed MUST be purged from its datastore. This is to ensure data privacy and compliance with related legislation, such as e.g. the General Data Protection Regulation (GDPR).
 
 </section>
 
