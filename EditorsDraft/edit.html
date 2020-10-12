@@ -471,7 +471,7 @@ The following OpenGraph properties are RECOMMENDED for use in `<meta>` elements 
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`|
+|@context|REQUIRED|Array of URL values|Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied.|
 |@type|REQUIRED|Text|`Dataset`|
 |@id|REQUIRED|URL|A URL uniquely identifying the dataset site resource. May be the URL of the <a>Dataset Site</a> itself|
 |url|REQUIRED|URL|Typically the URL of the dataset site itself.|
@@ -634,7 +634,7 @@ The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `Sch
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`|
+|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`. Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied where appropriate.|
 |@type|REQUIRED|String|`DataCatalog`|
 |@id|RECOMMENDED|URL|A unique identifier for the DataCatalog, often identical to the URL at which the DataCatalog is found.|
 |dataPublished|RECOMMENDED|`schema:Date`|The date the `DataCatalog` was published.|
