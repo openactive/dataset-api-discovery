@@ -1,0 +1,1020 @@
+<!DOCTYPE html><html xmlns="https://www.w3.org/1999/xhtml" lang="en"><head><meta charset="utf-8"><meta name="generator" content="ReSpec 25.6.0"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>span.example-title{text-transform:none}aside.example,div.example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}div.illegal-example{color:red}div.illegal-example p{color:#000}aside.example,div.example{padding:.5em;border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}aside.example div.example span.example-title{color:#999}</style><style>.issue-label{text-transform:initial}.warning>p:first-child{margin-top:0}.warning{padding:.5em;border-left-width:.5em;border-left-style:solid}span.warning{padding:.1em .5em .15em}.issue.closed span.issue-number{text-decoration:line-through}.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}.warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}li.task-list-item{list-style:none}input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}.issue a.respec-gh-label{padding:5px;margin:0 2px 0 2px;font-size:10px;text-transform:none;text-decoration:none;font-weight:700;border-radius:4px;position:relative;bottom:2px;border:none;display:inline-block}</style>
+    
+    <title>Dataset API Discovery 0.3</title>
+
+    
+
+    
+
+    <style id="respec-mainstyle">@keyframes pop{0%{transform:scale(1,1)}25%{transform:scale(1.25,1.25);opacity:.75}100%{transform:scale(1,1)}}.hljs{background:0 0!important}a abbr,h1 abbr,h2 abbr,h3 abbr,h4 abbr,h5 abbr,h6 abbr{border:none}dfn{font-weight:700}a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}a.bibref{text-decoration:none}.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}@supports not (text-decoration:red wavy underline){.respec-offending-element:not(pre){display:inline-block}.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}}#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}cite .bibref{font-style:normal}code{color:#c63501}th code{color:inherit}a[href].orcid{padding-left:4px;padding-right:4px}a[href].orcid>svg{margin-bottom:-2px}.toc a,.tof a{text-decoration:none}a .figno,a .secno{color:#000}ol.tof,ul.tof{list-style:none outside none}.caption{margin-top:.5em;font-style:italic}table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}.simple th a{color:#fff;padding:3px 5px;text-align:left}.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}.simple td{padding:3px 10px;border-top:1px solid #ddd}.simple tr:nth-child(even){background:#f0f6ff}.section dd>p:first-child{margin-top:0}.section dd>p:last-child{margin-bottom:0}.section dd{margin-bottom:1em}.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}#issue-summary>ul,.respec-dfn-list{column-count:2}#issue-summary li,.respec-dfn-list li{list-style:none}details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}details.respec-tests-details>*{padding-right:2em}details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}details.respec-tests-details>ul{width:100%;margin-top:-.3em}details.respec-tests-details>li{padding-left:1em}a[href].self-link:hover{opacity:1;text-decoration:none;background-color:transparent}h2,h3,h4,h5,h6{position:relative}aside.example .marker>a.self-link{color:inherit}h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{border:none;color:inherit;font-size:83%;height:2em;left:-1.6em;opacity:.5;position:absolute;text-align:center;text-decoration:none;top:0;transition:opacity .2s;width:2em}h2>a.self-link::before,h3>a.self-link::before,h4>a.self-link::before,h5>a.self-link::before,h6>a.self-link::before{content:"§";display:block}@media (max-width:767px){dd{margin-left:0}h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{left:auto;top:auto}}@media print{.removeOnSave{display:none}}</style>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid #bec9d9
+        }
+
+        td,
+        th {
+            padding: 3px 0.5em;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid #E2EDFE;
+        }
+
+        tr th[colspan] {
+            color: #005A9C;
+            background-color: #FEEDE2;
+            text-align: center
+        }
+
+        th {
+            color: #005A9C;
+            background-color: #E2EDFE;
+            font-weight: normal;
+            border-bottom: 1px solid #BEC9D9;
+        }
+
+        tbody tr th {
+            text-align: left;
+        }
+
+        td.nb {
+            font-size: smaller;
+        }
+
+        .rec,
+        .pr {
+            color: #005A9C;
+            background-color: #99EE99
+        }
+
+        .ext {
+            background-color: #FFFFFF
+        }
+
+        .cr,
+        .lcwd {
+            color: #005A9C;
+            background-color: #EEEE99
+        }
+
+        .wd {
+            color: #005A9C;
+            background-color: #EE9999
+        }
+
+        .ed,
+        .fpwd {
+            color: #005A9C;
+            background-color: #FF7777
+        }
+
+        code {
+            white-space: pre;
+        }
+
+        html {
+            background-image: none !important;
+        }
+
+        body {
+            background: white top left fixed no-repeat !important;
+            background-size: 25px auto !important;
+            background-image:
+                url('https://www.openactive.io/assets/openactive-label-specification.png') !important;
+        }
+
+        h1 {
+            font-family: 'Open Sans', sans-serif !important;
+            font-weight: 300 !important;
+            color: #3B3089 !important;
+            font-size: 220%;
+        }
+
+        #toc {
+            padding-top: 0px !important;
+        }
+
+        .remove {
+            background-color: yellow;
+        }
+
+        code {
+            color: #C83500;
+        }
+
+        em.rfc2119 {
+          text-transform:     lowercase;
+          font-variant:       small-caps;
+          font-style:         normal;
+          color:              #900;
+        }
+
+        a.internalDFN[href] {
+          color: #000;
+          font-weight: 500;
+        }
+    </style>
+
+<meta name="description" content="This document specifies a dataset site and embedded JSON-LD document that together describe
+an open data dataset and define related APIs that are available to manipulate it."><style>.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}.hljs-comment,.hljs-quote{color:#717277;font-style:italic}.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}.hljs-literal{color:#0b76c5}.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}</style><style>var{position:relative;cursor:pointer}var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}</style><script id="initialUserConfig" type="application/json">{
+  "specStatus": "CG-DRAFT",
+  "shortName": "dataset-api-discovery",
+  "edDraftURI": "https://openactive.io/dataset-api-discovery/EditorsDraft/",
+  "copyrightStart": 2019,
+  "editors": [
+    {
+      "name": "Leigh Dodds",
+      "url": "https://ldodds.com",
+      "company": "Open Data Institute",
+      "companyURL": "https://theodi.org",
+      "w3cid": 55359
+    },
+    {
+      "name": "Nick Evans",
+      "url": "https://nickevans.me/",
+      "company": "Open Data Institute",
+      "companyURL": "https://theodi.org"
+    },
+    {
+      "name": "Timothy Hill",
+      "company": "Open Data Institute",
+      "companyURL": "https://theodi.org"
+    }
+  ],
+  "otherLinks": [
+    {
+      "key": "Participate",
+      "data": [
+        {
+          "value": "GitHub openactive/dataset-api-discovery",
+          "href": "https://github.com/openactive/dataset-api-discovery/"
+        },
+        {
+          "value": "File a bug",
+          "href": "https://github.com/openactive/dataset-api-discovery/issues/"
+        },
+        {
+          "value": "Commit history",
+          "href": "https://github.com/openactive/dataset-api-discovery/commits/gh-pages"
+        },
+        {
+          "value": "Pull requests",
+          "href": "https://github.com/openactive/dataset-api-discovery/pulls/"
+        }
+      ]
+    },
+    {
+      "key": "Version",
+      "value": "0.1",
+      "href": "https://github.com/openactive/dataset-api-discovery/issues/"
+    }
+  ],
+  "logos": [
+    {
+      "src": "https://www.openactive.io/assets/openactive-logo-large.png",
+      "href": "https://www.openactive.io",
+      "alt": "openactive.io",
+      "width": 255,
+      "height": 43,
+      "id": "logo"
+    }
+  ],
+  "wg": "OpenActive Community Group",
+  "wgURI": "https://www.w3.org/community/openactive/",
+  "wgPublicList": "public-openactive",
+  "maxTocLevel": 4,
+  "preProcess": [],
+  "isRecTrack": true,
+  "isNoTrack": true,
+  "github": "https://github.com/openactive/dataset-api-discovery/",
+  "format": "markdown",
+  "localBiblio": {
+    "JSON-LD": {
+      "href": "https://www.w3.org/TR/json-ld/",
+      "title": "JSON-LD 1.0",
+      "status": "REC",
+      "publisher": "W3C",
+      "id": "json-ld"
+    },
+    "SCHEMA-ORG": {
+      "href": "https://schema.org/",
+      "title": "Schema.org"
+    },
+    "Modelling-Opportunity-Data": {
+      "href": "https://openactive.io/modelling-opportunity-data/",
+      "title": "Modelling Opportunity Data",
+      "publisher": "OpenActive Community Group"
+    },
+    "RPDE": {
+      "href": "https://openactive.io/realtime-paged-data-exchange/",
+      "title": "Realtime Paged Data Exchange",
+      "publisher": "OpenActive Community Group"
+    },
+    "OpenActive-Vocabulary": {
+      "href": "https://openactive.io/ns/",
+      "title": "OpenActive Vocabulary",
+      "publisher": "OpenActive Community Group"
+    },
+    "OAuth2": {
+      "href": "https://oauth.net/2/",
+      "title": "OAuth 2.0"
+    },
+    "OpenIdConnect": {
+      "href": "https://openid.net/connect/",
+      "title": "OpenID Connect"
+    }
+  },
+  "publishISODate": "2020-12-01T00:00:00.000Z",
+  "generatedSubtitle": "Draft Community Group Report 01 December 2020"
+}</script><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/cg-draft"></head>
+
+<body class="h-entry"><div class="head">
+    <a class="logo" href=""><img id="logo" alt="openactive.io" width="255" height="43" src="https://www.openactive.io/assets/openactive-logo-large.png"></a> <h1 id="title" class="title">Dataset API Discovery 0.3</h1>
+    
+    <h2>
+      Draft Community Group Report
+      <time class="dt-published" datetime="2020-12-01">01 December 2020</time>
+    </h2>
+    <dl>
+      
+      
+      <dt>Latest editor's draft:</dt><dd><a href="https://openactive.io/dataset-api-discovery/EditorsDraft/">https://openactive.io/dataset-api-discovery/EditorsDraft/</a></dd>
+      
+      
+      
+      
+      <dt>Editors:</dt>
+      <dd class="p-author h-card vcard" data-editor-id="55359"><a class="u-url url p-name fn" href="https://ldodds.com">Leigh Dodds</a>
+            (<a class="p-org org h-org h-card" href="https://theodi.org">Open Data Institute</a>)
+          </dd><dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="https://nickevans.me/">Nick Evans</a>
+            (<a class="p-org org h-org h-card" href="https://theodi.org">Open Data Institute</a>)
+          </dd><dd class="p-author h-card vcard"><span class="p-name fn">Timothy Hill</span>
+            (<a class="p-org org h-org h-card" href="https://theodi.org">Open Data Institute</a>)
+          </dd>
+      
+      
+      <dt>Participate:</dt><dd>
+    <a href="https://github.com/openactive/dataset-api-discovery/">GitHub openactive/dataset-api-discovery</a>
+  </dd><dd>
+    <a href="https://github.com/openactive/dataset-api-discovery/issues/">File a bug</a>
+  </dd><dd>
+    <a href="https://github.com/openactive/dataset-api-discovery/commits/gh-pages">Commit history</a>
+  </dd><dd>
+    <a href="https://github.com/openactive/dataset-api-discovery/pulls/">Pull requests</a>
+  </dd><dt>Version:</dt><dd>
+    <a href="https://github.com/openactive/dataset-api-discovery/issues/">0.1</a>
+  </dd>
+    </dl>
+    
+    <p class="copyright">
+          <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+          ©
+          2019-2020
+          
+          the Contributors to the Dataset API Discovery 0.3
+          Specification, published by the
+          <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a> under the
+          <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable
+                <a href="https://www.w3.org/community/about/agreements/cla-deed/">summary</a>
+                is available.
+              
+        </p>
+    <hr title="Separator for header">
+  </div><style>
+    body {
+        background-size: 25px auto !important;
+    }
+
+    body.toc-sidebar #toc {
+        background-size: 25px auto !important;
+        background-attachment: fixed !important;
+    }
+</style><section id="abstract" class="introductory"><h2>Abstract</h2><p>This document specifies a dataset site and embedded JSON-LD document that together describe
+an open data dataset and define related APIs that are available to manipulate it.</p></section><section id="sotd" class="introductory"><h2>Status of This Document</h2><p>
+      This specification was published by the
+      <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>. It is not a W3C Standard nor is it
+      on the W3C Standards Track.
+      
+            Please note that under the
+            <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+            there is a limited opt-out and other conditions apply.
+          
+      Learn more about
+      <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>.
+    </p><p>Contributions to this document are not only welcomed but are actively solicited
+and should be made via
+<a href="https://github.com/openactive/dataset-api-discovery/issues">GitHub Issues</a> and
+pull requests. The source code is available
+on <a href="https://github.com/openactive/dataset-api-discovery">GitHub</a>.</p><div class="note" role="note" id="issue-container-generatedID"><div role="heading" class="note-title marker" id="h-note" aria-level="3"><span>Note</span></div><div class="">
+
+
+<p>  This document represents an early Editors Draft of the planned API design. It is
+  likely to change between now and its final version. These
+  early drafts are intended to help developers provide that feedback by developing
+  proof-of-concept implementations. We encourage developers to explore this API and
+  contribute to the development of the specification.</p>
+</div></div><p>
+          If you wish to make comments regarding this document, please send them
+          to
+          <a href="mailto:public-openactive@w3.org">public-openactive@w3.org</a>
+          (<a href="mailto:public-openactive-request@w3.org?subject=subscribe">subscribe</a>,
+          <a href="https://lists.w3.org/Archives/Public/public-openactive/">archives</a>).
+        </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#scope-and-requirements"><bdi class="secno">1.1 </bdi>Scope and requirements</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#functionality-that-is-out-of-scope"><bdi class="secno">1.1.1 </bdi>Functionality that is out of scope</a></li></ol></li><li class="tocline"><a class="tocxref" href="#audience"><bdi class="secno">1.2 </bdi>Audience</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">2. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#typographical-conventions"><bdi class="secno">3. </bdi>Typographical Conventions</a></li><li class="tocline"><a class="tocxref" href="#key-actors"><bdi class="secno">4. </bdi>Key Actors</a></li><li class="tocline"><a class="tocxref" href="#definitions"><bdi class="secno">5. </bdi>Definitions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#dataset-sites"><bdi class="secno">5.1 </bdi>Dataset Sites</a></li><li class="tocline"><a class="tocxref" href="#data-catalogs"><bdi class="secno">5.2 </bdi>Data Catalogs</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">5.3 </bdi>Purpose</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#dataset-sites-0"><bdi class="secno">5.3.1 </bdi>Dataset Sites</a></li><li class="tocline"><a class="tocxref" href="#data-catalogs-0"><bdi class="secno">5.3.2 </bdi>Data Catalogs</a></li></ol></li><li class="tocline"><a class="tocxref" href="#dataset-sites-1"><bdi class="secno">5.4 </bdi>Dataset Sites</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#html-content"><bdi class="secno">5.4.1 </bdi>HTML Content</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#human-readable-content"><bdi class="secno">5.4.1.1 </bdi>Human-readable content</a></li><li class="tocline"><a class="tocxref" href="#html-meta-tags"><bdi class="secno">5.4.1.2 </bdi>HTML <code>meta</code> tags</a></li><li class="tocline"><a class="tocxref" href="#opengraph-meta-tags"><bdi class="secno">5.4.1.3 </bdi>OpenGraph <code>&lt;meta&gt;</code> tags</a></li></ol></li><li class="tocline"><a class="tocxref" href="#embedded-json"><bdi class="secno">5.4.2 </bdi>Embedded JSON</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#describing-individual-feeds-dcat-distribution-objects"><bdi class="secno">5.4.2.1 </bdi>Describing Individual Feeds (<code>dcat:Distribution</code> objects)</a></li><li class="tocline"><a class="tocxref" href="#supporting-booking-schema-webapi"><bdi class="secno">5.4.2.2 </bdi>Supporting Booking (<code>schema:WebAPI</code>)</a></li><li class="tocline"><a class="tocxref" href="#describing-api-endpoints-schema-entrypoint"><bdi class="secno">5.4.2.3 </bdi>Describing API Endpoints (<code>schema:EntryPoint</code>)</a></li><li class="tocline"><a class="tocxref" href="#describing-booking-services-schema-softwareapplication"><bdi class="secno">5.4.2.4 </bdi>Describing Booking Services (<code>schema:SoftwareApplication</code>)</a><ol class="toc"></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#discoverability-and-dataset-sites-using-schema-datacatalog"><bdi class="secno">5.4.3 </bdi>Discoverability and Dataset Sites (using <code>schema:DataCatalog</code>)</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#schema-org-to-dcat-mapping"><bdi class="secno">5.4.3.1 </bdi>schema.org to DCAT mapping</a><ol class="toc"></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#describing-publishers-schema-organization"><bdi class="secno">5.4.4 </bdi>Describing Publishers (<code>schema:Organization</code>)</a></li><li class="tocline"><a class="tocxref" href="#removing-data-feeds"><bdi class="secno">5.4.5 </bdi>Removing data feeds</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#data-publishers"><bdi class="secno">5.4.5.1 </bdi>Data Publishers</a></li><li class="tocline"><a class="tocxref" href="#data-consumers"><bdi class="secno">5.4.5.2 </bdi>Data Consumers</a></li></ol></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#future-versions-of-this-api"><bdi class="secno">6. </bdi>Future versions of this API</a></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>
+        Normative references
+      </a></li></ol></li></ol></nav><section class="informative" id="introduction"><h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction<a class="self-link" aria-label="§" href="#introduction"></a></h2><p><em>This section is non-normative.</em></p><p>The document is an output of the
+<a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>. As part
+of the <a href="https://openactive.io">OpenActive</a> initiative, the community group is
+developing standards that will promote the publication and use of open
+<a href="https://openactive.io/modelling-opportunity-data/#categories-of-physical-activity-data">opportunity data</a>
+in helping people to become more physically active.</p><p>This specification aims to build on existing work by the <a href="https://www.w3.org/community/web-api-discovery/">WebAPI Discovery Community Group</a>, the W3C's <a href="https://www.w3.org/TR/vocab-dcat-2/">DCAT standard</a>, and the <a href="https://github.com/schemaorg/schemaorg/issues/1423">Schema.org discussion</a>, providing a profile and guidance specifically both for open data publishers and implementers of Web APIs that manipulate openly available datasets. It also aims to provide conformance rules to ensure that implementers include the details necessary to allow a <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> to reliably integrate with standards-compliant services without human intervention.</p><p>The specification defines both the requirements of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> provided by a <a href="#dfn-data-publisher-s" class="internalDFN" data-link-type="dfn">Data Publisher</a> (server) for use by a <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a> (client), and of any Data Catalog designed to enable discovery of such sites. In addition, it includes high level requirements for human-readable content, and detailed requirements and conformance rules for machine-readable content.</p><section id="scope-and-requirements"><h3 id="x1-1-scope-and-requirements"><bdi class="secno">1.1 </bdi>Scope and requirements<a class="self-link" aria-label="§" href="#scope-and-requirements"></a></h3><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> that conform to this specification will be:</p><ul>
+<li><strong>Schema.org compatible</strong> - Remain fully compatible with schema.org, and machine-readable by <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> that can read <a href="https://schema.org/Dataset">Schema.org Dataset</a> and future <a href="https://schema.org/WebAPI">Schema.org WebAPI</a> embedded JSON-LD.</li>
+<li><strong>DCAT compatible</strong> - By ensuring that as much of the schema.org markup as possible conforms to the DCAT group's <a href="https://www.w3.org/TR/vocab-dcat-2/#dcat-sdo">recommended mappings</a> between schema.org and DCAT version 2 .</li>
+<li><strong>Google compatible</strong> - Use embedded JSON-LD to enable indexing by <a href="https://developers.google.com/search/docs/data-types/dataset">Google Dataset Search</a>, and any <a href="https://blog.apis.guru/api-discovery-can-we-do-better-2336706d5407">future Google <code>WebAPI</code> Search</a>.</li>
+<li><strong>Sufficient for automated integration</strong> - Allow <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a>s to reliably integrate with services that are compliant with a standardised <a href="https://nordicapis.com/difference-api-documentation-specification-definition/">API specification</a> (e.g. a Swagger specification) without requiring additional configuration or human intervention.</li>
+<li><strong>Human readable</strong> - Include human-readable content to allow developers to successfully integrate discover, consume and integrate with the <a href="#dfn-data-publisher-s" class="internalDFN" data-link-type="dfn">Data Publisher's</a> dataset and API.</li>
+<li><strong>Interactive</strong> - Include a mechanism for <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> to provide feedback to <a href="#dfn-data-publisher-s" class="internalDFN" data-link-type="dfn">Data Publishers</a> in the open, and subscribe to updates from <a href="#dfn-data-publisher-s" class="internalDFN" data-link-type="dfn">Data Publishers</a>.</li>
+</ul><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> will also provide the following information about the implementation of APIs it describes:</p><ul>
+<li>A route to gain access to the Web API described, e.g a website with a sign-up form.</li>
+<li>The specific version of any specification to which the Web API conforms (e.g. the <a href="https://www.openactive.io/open-booking-api/">Open Booking API</a>)</li>
+<li>The specific defined profiles of any specification that are supported, both for any Web APIs defined, but also for any open datasets.</li>
+<li>Where conformance is verified via third-party or self-certification, a statement of the level of conformance, and reference to evidence of this.</li>
+</ul><p><strong>Data Catalogs</strong> published in accordance with this standard will be</p><ul>
+<li><strong>Schema.org compatible</strong> - Remain fully compatible with schema.org, and machine-readable by <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> that can read <a href="https://schema.org/Dataset">Schema.org Dataset</a> and future <a href="https://schema.org/WebAPI">Schema.org WebAPI</a> embedded JSON-LD.</li>
+<li><strong>DCAT compatible</strong> - By ensuring that as much of the schema.org markup as possible conforms to the DCAT group's <a href="https://www.w3.org/TR/vocab-dcat-2/#dcat-sdo">recommended mappings</a> between schema.org and DCAT version 2 .</li>
+<li><strong>Sufficient for automated integration</strong> - Allow <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a>s to reliably integrate with services that are compliant with a standardised <a href="https://nordicapis.com/difference-api-documentation-specification-definition/">API specification</a> (e.g. a Swagger specification) without requiring additional configuration or human intervention.-</li>
+</ul><p>Note that although this specification of the <a href="https://www.w3.org/community/openactive/">OpenActive Community Group</a>, it is designed to apply to any open dataset where an API is available to manipulate it.</p><section id="functionality-that-is-out-of-scope"><h4 id="x1-1-1-functionality-that-is-out-of-scope"><bdi class="secno">1.1.1 </bdi>Functionality that is out of scope<a class="self-link" aria-label="§" href="#functionality-that-is-out-of-scope"></a></h4><p>By design this specification will not define some types of functionality.</p><p>These have been declared as permanently out of scope because they are
+adequately covered by existing specifications:</p><ul>
+<li><strong>API documentation</strong> - each system should provide its own documentation, the specification only requires that such documentation exist.</li>
+<li><strong>API specification and API definition</strong> - many existing formats are available for API specification (e.g. Swagger, RAML, etc.).</li>
+</ul></section></section><section id="audience"><h3 id="x1-2-audience"><bdi class="secno">1.2 </bdi>Audience<a class="self-link" aria-label="§" href="#audience"></a></h3><p>The document is primarily intended for the following audiences:</p><ul>
+<li>Software developers who want to publish a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> ("<a href="#dfn-data-publisher-s" class="internalDFN" data-link-type="dfn">Data Publishers</a>").</li>
+<li>Software developers building client libraries or tools.</li>
+<li>Software developers writing applications that will use <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> ("<a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a>").</li>
+</ul></section></section><section id="conformance"><h2 id="x2-conformance"><bdi class="secno">2. </bdi>Conformance<a class="self-link" aria-label="§" href="#conformance"></a></h2><p>
+      As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+    </p><p>
+        The key words <em class="rfc2119">MUST</em>, <em class="rfc2119">OPTIONAL</em>, <em class="rfc2119">RECOMMENDED</em>, and <em class="rfc2119">REQUIRED</em> in this document
+        are to be interpreted as described in
+        <a href="https://tools.ietf.org/html/bcp14">BCP 14</a>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">RFC2119</a></cite>] [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8174" title="Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words">RFC8174</a></cite>]
+        when, and only when, they appear in all capitals, as shown here.
+      </p><p>This specification makes use of the compact IRI Syntax; please refer to the
+<a href="https://www.w3.org/TR/json-ld/#compact-iris">Compact IRIs</a> from [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld" title="JSON-LD 1.0">JSON-LD</a></cite>].</p></section><section id="typographical-conventions"><h2 id="x3-typographical-conventions"><bdi class="secno">3. </bdi>Typographical Conventions<a class="self-link" aria-label="§" href="#typographical-conventions"></a></h2><p>The following typographic conventions are used in this specification:</p><dl class="typography">
+    <dt><code>markup</code></dt>
+    <dd>Markup (elements, attributes, properties), machine processable
+        values (string, characters, media types), property name, or a
+        file name is in a monospace font.</dd>
+    <dt><a href="#" class="internalDFN respec-offending-element" title="Linter (local-refs-exist): Broken local reference found in document. Please fix the links mentioned. See developer console. Occured" id="respec-offender-linter-local-refs-exist-broken-local-reference-found-in-document-please-fix-the-links-mentioned-see-developer-console-occured">Definition</a></dt>
+    <dd>A definition of a term, to be used elsewhere in this or other
+        specifications, is underlined and in black.</dd>
+    <dt><a href="">hyperlink</a></dt>
+    <dd>A hyperlink is underlined and in blue.</dd>
+    <dt>[<a href="">reference</a>]</dt>
+    <dd>A document reference (normative or informative) is enclosed in
+        square brackets and links to the references section.</dd>
+</dl><div class="note" role="note" id="issue-container-generatedID-0"><div role="heading" class="note-title marker" id="h-note-0" aria-level="3"><span>Note</span></div><div class="">
+
+
+<p>Notes are in light green boxes with a green left border and with a "Note"
+header in green. Notes are normative or informative depending on the whether
+they are in a normative or informative section, respectively.</p>
+</div></div><div class="example" id="example-1">
+        <div class="marker">
+    <a class="self-link" href="#example-1">Example<bdi> 1</bdi></a>
+  </div> <pre aria-busy="false"><code class="hljs javascript">Examples are <span class="hljs-keyword">in</span> light khaki boxes, <span class="hljs-keyword">with</span> khaki left border, and <span class="hljs-keyword">with</span> a
+numbered <span class="hljs-string">"Example"</span> header <span class="hljs-keyword">in</span> khaki. Examples are always informative.
+The content <span class="hljs-keyword">of</span> the example is <span class="hljs-keyword">in</span> monospace font and may be syntax colored.</code></pre>
+      </div></section><section id="key-actors"><h2 id="x4-key-actors"><bdi class="secno">4. </bdi>Key Actors<a class="self-link" aria-label="§" href="#key-actors"></a></h2><dl class="typography">
+    <dt><dfn data-lt="Data Publisher's|Data Publisher" data-dfn-type="dfn" data-plurals="data publishers" id="dfn-data-publisher-s">Data Publisher</dfn></dt>
+    <dd>The application that is publishing the <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a>, that will also be making available open data endpoints and API endpoints for use by the <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumer</a>.</dd>
+    <dt><dfn data-dfn-type="dfn" data-plurals="data consumers" id="dfn-data-consumer">Data Consumer</dfn></dt>
+    <dd>The application or human that is reading the <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> in order  to make use of the available open data endpoints and API endpoints.</dd>
+</dl></section><section class="normative" id="definitions"><h2 id="x5-definitions"><bdi class="secno">5. </bdi>Definitions<a class="self-link" aria-label="§" href="#definitions"></a></h2><section id="dataset-sites"><h3 id="x5-1-dataset-sites"><bdi class="secno">5.1 </bdi>Dataset Sites<a class="self-link" aria-label="§" href="#dataset-sites"></a></h3><p>A <dfn data-dfn-type="dfn" data-plurals="dataset sites" id="dfn-dataset-site">Dataset Site</dfn> is a human and machine readable web page ("<dfn data-dfn-type="dfn" data-plurals="dataset pages" id="dfn-dataset-page">Dataset Page</dfn>") that describes a dataset and the APIs available to interact with it, with associated functionality that allows for feedback to be provided about the dataset.</p></section><section id="data-catalogs"><h3 id="x5-2-data-catalogs"><bdi class="secno">5.2 </bdi>Data Catalogs<a class="self-link" aria-label="§" href="#data-catalogs"></a></h3><p>A <dfn data-dfn-type="dfn" data-plurals="data catalogs" id="dfn-data-catalog">Data Catalog</dfn> is a JSON structure that supports and enables the discoverability of <code>Dataset Sites</code>. They do so by providing metadata and links, either to <code>Dataset Sites</code> directly or to other <code>Data Catalogs</code>.</p></section><section id="purpose"><h3 id="x5-3-purpose"><bdi class="secno">5.3 </bdi>Purpose<a class="self-link" aria-label="§" href="#purpose"></a></h3><section id="dataset-sites-0"><h4 id="x5-3-1-dataset-sites"><bdi class="secno">5.3.1 </bdi>Dataset Sites<a class="self-link" aria-label="§" href="#dataset-sites-0"></a></h4><p>The purpose of a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> is to provide:</p><ul>
+<li>A web page that can be referenced when discussing the dataset.</li>
+<li>A human and machine readable licence associated with the data (the <a href="#dfn-dataset-page" class="internalDFN" data-link-type="dfn">Dataset Page</a> contains invisible metadata which allows its details to be read automatically).</li>
+<li>A human and machine readable rights statement to specify how dataset users (innovators who want to build on top of/use data) should attribute your data.</li>
+<li>An accessible "single point of truth" that explains where the data can be found.</li>
+<li>Details ("documentation") and historical record ("changelog") relating to the format of the data, including the specifications it follows, and the data fields it contains.</li>
+<li>A place where the community can contribute with comments, and raise issues.</li>
+<li>A mechanism by which <a href="#dfn-data-consumer" class="internalDFN" data-link-type="dfn">Data Consumers</a> can subscribe to get updates about changes to the data format, specifications and fields.</li>
+<li>A human and machine readable description of any APIs that can be used to manipulate the data, and the process to gain access to such APIs.</li>
+</ul></section><section id="data-catalogs-0"><h4 id="x5-3-2-data-catalogs"><bdi class="secno">5.3.2 </bdi>Data Catalogs<a class="self-link" aria-label="§" href="#data-catalogs-0"></a></h4><p>The purpose of a <a href="#dfn-data-catalog" class="internalDFN" data-link-type="dfn">Data Catalog</a> is to provide:</p><ul>
+<li>machine-readable metadata about dataset sites</li>
+<li>URL(s) pointing to dataset sites</li>
+<li>machine-readable metadata about, and URLS pointing to, other <code>Data Catalogs</code> where appropriate</li>
+<li>a start-point for spidering of data collections</li>
+</ul></section></section><section id="dataset-sites-1"><h3 id="x5-4-dataset-sites"><bdi class="secno">5.4 </bdi>Dataset Sites<a class="self-link" aria-label="§" href="#dataset-sites-1"></a></h3><section id="html-content"><h4 id="x5-4-1-html-content"><bdi class="secno">5.4.1 </bdi>HTML Content<a class="self-link" aria-label="§" href="#html-content"></a></h4><section id="human-readable-content"><h5 id="x5-4-1-1-human-readable-content"><bdi class="secno">5.4.1.1 </bdi>Human-readable content<a class="self-link" aria-label="§" href="#human-readable-content"></a></h5><p>With the exception of licensing information, there are no strong requirements for the human-readable content of dataset pages, and implementers may provide whatever information they see fit here. For the convenience of end-users, however, it is normally expected (and is <em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em>) that a <code>Dataset Page</code> will provide <strong>at least</strong> the following information and markup:</p><ul>
+<li>the name of the organisation publishing the data</li>
+<li>the standards to which the published data conforms (e.g., the Opportunity standard)</li>
+<li>the version of each of these standards (e.g., '2.0')</li>
+<li>where a link to a data feed is provided, their text should refer to the entity types this feed contains (e.g. <code>SessionSeries</code>, <code>Slots</code>)</li>
+<li>an appropriately-labelled link to documentation relevant to the data feed(s)</li>
+<li>an appropriately-labelled link to a discussion channel for the data feed(s)</li>
+<li>licensing information</li>
+</ul><p>Note that, of the list above, only licensing information is <em class="rfc2119" title="REQUIRED">REQUIRED</em> to be available in human-readable form, and this license <em class="rfc2119" title="MUST">MUST</em> be a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> (often abbreviated as 'cc-by').</p><p>Note further that, in the event that you are republishing OpenActive data from another source, the original publisher must be credited as per the terms of this license.</p></section><section id="html-meta-tags"><h5 id="x5-4-1-2-html-meta-tags"><bdi class="secno">5.4.1.2 </bdi>HTML <code>meta</code> tags<a class="self-link" aria-label="§" href="#html-meta-tags"></a></h5><p>In addition to the directly-readable content of the HTML body, information contained in the HTML head may sometimes be used by search engines and social-media platforms to aid findability and provide snippets.</p><p>It is accordingly <em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> that the following <code>&lt;meta&gt;</code> tags be supplied.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>The name of the publishing organisation, followed by the string ' Open Data'.</td>
+</tr>
+<tr>
+<td>identifier</td>
+<td>The URL of the dataset site.</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>Short, descriptive words or phrases to aid discoverability</td>
+</tr>
+<tr>
+<td>description</td>
+<td>A human-readable description of the dataset.</td>
+</tr>
+<tr>
+<td>language</td>
+<td>The language of the dataset site.</td>
+</tr>
+</tbody></table></section><section id="opengraph-meta-tags"><h5 id="x5-4-1-3-opengraph-meta-tags"><bdi class="secno">5.4.1.3 </bdi>OpenGraph <code>&lt;meta&gt;</code> tags<a class="self-link" aria-label="§" href="#opengraph-meta-tags"></a></h5><p>OpenGraph is a <a href="https://ogp.me/">protocol</a> created by Facebook that allows useful snippets to be extracted on social media platforms, including also LinkedIn and Twitter.</p><p>The following OpenGraph properties are <em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> for use in <code>&lt;meta&gt;</code> elements in the HTML <code>head</code> of <a href="#dfn-dataset-page" class="internalDFN" data-link-type="dfn">Dataset Pages</a>.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>og:title</code></td>
+<td>The name of the publishing organisation, followed by the string ' Open Data'.</td>
+</tr>
+<tr>
+<td><code>og:description</code></td>
+<td>A human-readable description of the dataset.</td>
+</tr>
+<tr>
+<td><code>og:locale</code></td>
+<td>For publishers within the UK, this should be 'en_GB'.</td>
+</tr>
+<tr>
+<td><code>og:url</code></td>
+<td>The URL of the dataset site.</td>
+</tr>
+<tr>
+<td><code>og:image</code></td>
+<td>The logo of the publishing organisation</td>
+</tr>
+</tbody></table></section></section><section id="embedded-json"><h4 id="x5-4-2-embedded-json"><bdi class="secno">5.4.2 </bdi>Embedded JSON<a class="self-link" aria-label="§" href="#embedded-json"></a></h4><p><a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Sites</a> must be machine-readable via embedded JSON-LD.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@context</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Array of URL values</td>
+<td>Note that, in conformity with <a href="https://tools.ietf.org/html/rfc3986#section-3.3">RFC3986</a>, trailing slashes <em class="rfc2119" title="MUST">MUST</em> be supplied.</td>
+</tr>
+<tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>Dataset</code></td>
+</tr>
+<tr>
+<td><code>@id</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>A URL uniquely identifying the dataset site resource. May be the URL of the <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> itself</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/url"><code>schema:url</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>Typically the URL of the dataset site itself.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/name"><code>schema:name</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td>The name of the collection of datasets referenced by the site. Often this will simply be the name of the publishing organisation.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/description"><code>schema:description</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text</td>
+<td>A human-readable description of the datasets referenced by the site.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/keywords"><code>schema:keywords</code></a></td>
+<td><em class="rfc2119" title="OPTIONAL">OPTIONAL</em></td>
+<td>Array of Text</td>
+<td>Short descriptive metadata tags for the dataset collection.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/license"><code>schema:license</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be <code>https://creativecommons.org/licenses/by/4.0/</code>.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/distribution"><code>schema:distribution</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Array of <code>dcat:Distribution</code> object</td>
+<td>See below, Describing Individual Feeds</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/discussionUrl"><code>schema:discussionUrl</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL</td>
+<td>A link to a resource for discussing and raising issues with the published datasets. Typically, although not necessarily, this will be a link to a GitHub repository.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/documentation"><code>schema:documentation</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Array of URL</td>
+<td>Link(s) to further resources concerning the dataset site and its referenced datasets - e.g., GitHub READMEs or status summaries.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/inLanguage"><code>schema:inLanguage</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>String</td>
+<td>The language of the dataset. Should be expressed as an ISO 639-2 language code.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/publisher"><code>schema:publisher</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>schema:Organization</td>
+<td>The organization responsible for publishing the collection of datasets linked to by the dataset site. For further information, see below, Describing Organizations.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/datePublished"><code>schema:datePublished</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>schema:Date</td>
+<td>The date the dataset site was published.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/schemaVersion"><code>schema:schemaVersion</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>The version of the dataset site specification to which the site conforms.</td>
+</tr>
+</tbody></table><p>The MIME-type of this JSON object <em class="rfc2119" title="MUST">MUST</em> be defined on the enclosing HTML <code>script</code> tag as <code>application/ld+json</code>.</p><div class="note" role="note" id="issue-container-generatedID-1"><div role="heading" class="note-title marker" id="h-note-1" aria-level="5"><span>Note</span><span class="issue-label">: Trailing slashes and @context</span></div><div class="">
+
+
+<p>It is common practice is to reference <a href="https://schema.org">https://schema.org</a> without a trailing / within @context. However to be consistent with the OpenActive Modelling Opportunity Data specification, which uses the full URI of <a href="https://openactive.io/">https://openactive.io/</a> (including a path as per <a href="https://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986</a>, the specification requires the schema.org context to be referenced with a trailing slash, i.e. <a href="https://schema.org/">https://schema.org/</a>.</p>
+</div></div><section id="describing-individual-feeds-dcat-distribution-objects"><h5 id="x5-4-2-1-describing-individual-feeds-dcat-distribution-objects"><bdi class="secno">5.4.2.1 </bdi>Describing Individual Feeds (<code>dcat:Distribution</code> objects)<a class="self-link" aria-label="§" href="#describing-individual-feeds-dcat-distribution-objects"></a></h5><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>DataDownload</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/name"><code>schema:name</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td>A human-readable name for the dataset.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/additionalType"><code>schema:additionalType</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL</td>
+<td>A link to a definition of the type of the feed - e.g of <code>ScheduledSessions</code> or <code>CourseInstances</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/encodingFormat"><code>schema:encodingFormat</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text or URL</td>
+<td>The MIME-type of the data accessible via the <code>contentUrl</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/contentUrl"><code>schema:contentUrl</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>The URL of the feed containing the dataset.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/totalItems"><code>schema:totalItems</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Integer</td>
+<td>The total number of items (whether <code>updated</code> or <code>deleted</code>) that are available from the beginning of the feed. Note that this number will often be approximate only, given the rapidity with which updates may be made to backend datastores.</td>
+</tr>
+</tbody></table></section><section id="supporting-booking-schema-webapi"><h5 id="x5-4-2-2-supporting-booking-schema-webapi"><bdi class="secno">5.4.2.2 </bdi>Supporting Booking (<code>schema:WebAPI</code>)<a class="self-link" aria-label="§" href="#supporting-booking-schema-webapi"></a></h5><p>In addition to the above markup for discoverability, dataset sites that support Open Booking API functionality <em class="rfc2119" title="MUST">MUST</em> indicate this with markup enabling discovery and use of the relevant API endpoints.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>WebAPI</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/name"><code>schema:name</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text</td>
+<td>A human-readable name for the dataset.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/description"><code>schema:description</code></a></td>
+<td><em class="rfc2119" title="OPTIONAL">OPTIONAL</em></td>
+<td>Text</td>
+<td>A human-readable description of the API</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/documentation"><code>schema:documentation</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL or schema:CreativeWork</td>
+<td>Human-readable API documentation. See Describing API Endpoints, below.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/termsOfService"><code>schema:termsOfService</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text or URL</td>
+<td>Human-readable terms of service documentation.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/provider"><code>schema:provider</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>schema:Organization</td>
+<td>The Organization providing the API endpoint.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/endpointUrl"><code>schema:endpointUrl</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>The root location or primary endpoint of the API.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/conformsTo"><code>schema:conformsTo</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL</td>
+<td>The URL reference of an established standard to which the described API conforms.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/license"><code>schema:license</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be <code>https://creativecommons.org/licenses/by/4.0/</code>.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/endpointDescription"><code>schema:endpointDescription</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td><code>schema:EntryPoint</code></td>
+<td>A machine-readable description of the API. See Describing API Endpoints, below</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/bookingService"><code>schema:bookingService</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td><code>schema:SoftwareApplication</code></td>
+<td>The software system responsible for handling booking over the Open Booking API.</td>
+</tr>
+<tr>
+<td><a href="https://openactive.io/oa:authenticationAuthority"><code>oa:authenticationAuthority</code></a></td>
+<td><code>schema:URL</code></td>
+<td>The location of the OpenID Provider or other relevant authentication authority that must be used to access the API.</td>
+<td>e.g. <code>https://auth.bookingsystem.com</code></td>
+</tr>
+</tbody></table></section><section id="describing-api-endpoints-schema-entrypoint"><h5 id="x5-4-2-3-describing-api-endpoints-schema-entrypoint"><bdi class="secno">5.4.2.3 </bdi>Describing API Endpoints (<code>schema:EntryPoint</code>)<a class="self-link" aria-label="§" href="#describing-api-endpoints-schema-entrypoint"></a></h5><p>Supporting documentation is crucial for the successful uptake and use of APIs. Ideally, both human-readable freetext and machine-readable structured data are made available.</p><p>The schema.org objects for human- and machine-readable documents are largely identical in terms of content and structure. However, the MIME-type associated with each will normally differ.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>EntryPoint</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/url"><code>schema:url</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>A URL pointing to supporting documentation for the API.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/encodingFormat"><code>schema:encodingFormat</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text</td>
+<td>The MIME-type delivered by the url. For human-readable documentation (<code>schema:documentation</code>) this will normally be <code>text/html</code>; for machine-readable documentation (<code>schema:endpointUrl</code>), <code>application/json</code> or a more-specific subtype of this.</td>
+</tr>
+</tbody></table></section><section id="describing-booking-services-schema-softwareapplication"><h5 id="x5-4-2-4-describing-booking-services-schema-softwareapplication"><bdi class="secno">5.4.2.4 </bdi>Describing Booking Services (<code>schema:SoftwareApplication</code>)<a class="self-link" aria-label="§" href="#describing-booking-services-schema-softwareapplication"></a></h5><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>SoftwareApplication</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/name"><code>schema:name</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td>The name of the software application</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/url"><code>schema:url</code></a></td>
+<td><em class="rfc2119" title="OPTIONAL">OPTIONAL</em></td>
+<td><code>schema:URL</code></td>
+<td>The URL of a human-readable web-page providing further information about the software.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/featureList"><code>schema:featureList</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td><code>schema:URL</code></td>
+<td>A URL pointing to a machine-readable description of the Open Booking API features implemented by the system, e.g. as generated by the <a href="https://github.com/openactive/openactive-test-suite">OpenActive Test Suite</a>.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/softwareVersion"><code>schema:softwareVersion</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text</td>
+<td>Version of the software instance.</td>
+</tr>
+</tbody></table><div class="note" role="note" id="issue-container-generatedID-2"><div role="heading" class="note-title marker" id="h-note-2" aria-level="6"><span>Note</span></div><div class="">
+
+
+<p>The <code>schema:WebAPI</code> specification has been assigned Pending status by the schema.org organisation, and is scheduled for release in schema version 10.0.  While <code>schema:WebAPI</code> is relatively stable, then, points of detail are still subject to review and this specification may change at short notice.</p>
+</div></div><section id="worked-example"><h6 id="x5-4-2-4-1-worked-example"><bdi class="secno">5.4.2.4.1 </bdi>Worked Example<a class="self-link" aria-label="§" href="#worked-example"></a></h6><p>The below illustrates a <a href="#dfn-dataset-site" class="internalDFN" data-link-type="dfn">Dataset Site</a> pointing to feeds consisting of <code>ScheduledSessions</code>, <code>SessionSeries</code>, and <code>Events</code>. As the presence of the <code>webAPI</code> attribute indicates, data items from these feeds are bookable.</p><pre><code aria-busy="false" class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"application/ld+json`/"</span>&gt;</span><span class="javascript">
+{
+   <span class="hljs-string">"@context"</span>:[
+      <span class="hljs-string">"https://schema.org/"</span>,
+      <span class="hljs-string">"https://openactive.io/"</span>,
+      <span class="hljs-string">"https://openactive.io/ns-beta"</span>
+   ],
+   <span class="hljs-string">"@type"</span>:<span class="hljs-string">"Dataset"</span>,
+   <span class="hljs-string">"@id"</span>:<span class="hljs-string">"https://data.example.com/"</span>,
+   <span class="hljs-string">"name"</span>:<span class="hljs-string">"Example Sessions and Events"</span>,
+   <span class="hljs-string">"description"</span>:<span class="hljs-string">"Near real-time availability and rich descriptions relating to sessions and events available from Example.com"</span>,
+   <span class="hljs-string">"url"</span>:<span class="hljs-string">"https://data.example.com/"</span>,
+   <span class="hljs-string">"dateModified"</span>:<span class="hljs-string">"2019-08-25T11:23:27+00:00"</span>,
+   <span class="hljs-string">"keywords"</span>:[
+      <span class="hljs-string">"Courses"</span>,
+      <span class="hljs-string">"Sessions"</span>,
+      <span class="hljs-string">"Events"</span>,
+      <span class="hljs-string">"Activities"</span>,
+      <span class="hljs-string">"Sports"</span>,
+      <span class="hljs-string">"Physical Activity"</span>,
+      <span class="hljs-string">"OpenActive"</span>
+   ],
+   <span class="hljs-string">"schemaVersion"</span>:<span class="hljs-string">"https://www.openactive.io/modelling-opportunity-data/2.0/"</span>,
+   <span class="hljs-string">"license"</span>:<span class="hljs-string">"https://creativecommons.org/licenses/by/4.0/"</span>,
+   <span class="hljs-string">"publisher"</span>:{
+      <span class="hljs-string">"@type"</span>:<span class="hljs-string">"Organization"</span>,
+      <span class="hljs-string">"name"</span>:<span class="hljs-string">"Example.com"</span>,
+      <span class="hljs-string">"description"</span>:<span class="hljs-string">"Example.com makes it easy to get active!"</span>,
+      <span class="hljs-string">"url"</span>:<span class="hljs-string">"https://example.com/home"</span>,
+      <span class="hljs-string">"legalName"</span>:<span class="hljs-string">"Example Ltd"</span>,
+      <span class="hljs-string">"logo"</span>:{
+         <span class="hljs-string">"@type"</span>:<span class="hljs-string">"ImageObject"</span>,
+         <span class="hljs-string">"url"</span>:<span class="hljs-string">"https://cdn.example.com/assets/logo.png"</span>
+      },
+      <span class="hljs-string">"email"</span>:<span class="hljs-string">"support@example.com"</span>
+   },
+   <span class="hljs-string">"discussionUrl"</span>:<span class="hljs-string">"https://github.com/example/repo/issues"</span>,
+   <span class="hljs-string">"datePublished"</span>:<span class="hljs-string">"2019-07-11T00:00:00+00:00"</span>,
+   <span class="hljs-string">"inLanguage"</span>:[
+      <span class="hljs-string">"en-GB"</span>
+   ],
+   <span class="hljs-string">"distribution"</span>:[
+      {
+         <span class="hljs-string">"@type"</span>:<span class="hljs-string">"DataDownload"</span>,
+         <span class="hljs-string">"name"</span>:<span class="hljs-string">"ScheduledSession"</span>,
+         <span class="hljs-string">"additionalType"</span>:<span class="hljs-string">"https://openactive.io/ScheduledSession"</span>,
+         <span class="hljs-string">"encodingFormat"</span>:<span class="hljs-string">"application/vnd.openactive.rpde+json; version=1"</span>,
+         <span class="hljs-string">"contentUrl"</span>:<span class="hljs-string">"https://example.com/api/openactive/scheduledsessions"</span>,
+         <span class="hljs-string">"totalItems"</span>: <span class="hljs-number">1852</span>
+      },
+      {
+         <span class="hljs-string">"@type"</span>:<span class="hljs-string">"DataDownload"</span>,
+         <span class="hljs-string">"name"</span>:<span class="hljs-string">"SessionSeries"</span>,
+         <span class="hljs-string">"additionalType"</span>:<span class="hljs-string">"https://openactive.io/SessionSeries"</span>,
+         <span class="hljs-string">"encodingFormat"</span>:<span class="hljs-string">"application/vnd.openactive.rpde+json; version=1"</span>,
+         <span class="hljs-string">"contentUrl"</span>:<span class="hljs-string">"https://example.com/api/openactive/sessionseries"</span>,
+         <span class="hljs-string">"totalItems"</span>: <span class="hljs-number">361</span>
+      },
+      {
+         <span class="hljs-string">"@type"</span>:<span class="hljs-string">"DataDownload"</span>,
+         <span class="hljs-string">"name"</span>:<span class="hljs-string">"Event"</span>,
+         <span class="hljs-string">"additionalType"</span>:<span class="hljs-string">"https://schema.org/Event"</span>,
+         <span class="hljs-string">"encodingFormat"</span>:<span class="hljs-string">"application/vnd.openactive.rpde+json; version=1"</span>,
+         <span class="hljs-string">"contentUrl"</span>:<span class="hljs-string">"https://example.com/api/openactive/events"</span>,
+         <span class="hljs-string">"totalItems"</span>: <span class="hljs-number">1906</span>
+      }
+   ],
+   <span class="hljs-string">"backgroundImage"</span>:{
+      <span class="hljs-string">"@type"</span>:<span class="hljs-string">"ImageObject"</span>,
+      <span class="hljs-string">"url"</span>:<span class="hljs-string">"https://cdn.example.com/images/background.jpg"</span>
+   },
+   <span class="hljs-string">"documentation"</span>:<span class="hljs-string">"https://developer.openactive.io/"</span>,
+   <span class="hljs-string">"accessService"</span>:{
+      <span class="hljs-string">"@type"</span>:<span class="hljs-string">"WebAPI"</span>,
+      <span class="hljs-string">"name"</span>:<span class="hljs-string">"Open Booking API"</span>,
+      <span class="hljs-string">"description"</span>:<span class="hljs-string">"The Open Booking API lets you to book OpenActive Opportunities. The API uses standard schema.org types and is compliant with the JSON-LD specification."</span>,
+      <span class="hljs-string">"documentation"</span>:<span class="hljs-string">"https://openactive.io/open-booking-api/EditorsDraft"</span>,
+      <span class="hljs-string">"termsOfService"</span>:<span class="hljs-string">"https://example.com/api/booking/documentation/terms-of-service"</span>,
+      <span class="hljs-string">"provider"</span>: {
+        <span class="hljs-string">"@type"</span>: <span class="hljs-string">"Organization"</span>,
+        <span class="hljs-string">"name"</span>:<span class="hljs-string">"examplebooking.com"</span>,
+        <span class="hljs-string">"description"</span>:<span class="hljs-string">"examplebooking.com makes it easy to get booking!"</span>,
+        <span class="hljs-string">"url"</span>:<span class="hljs-string">"https://examplebooking.com/home"</span>,
+        <span class="hljs-string">"email"</span>:<span class="hljs-string">"support@examplebooking.com"</span>
+      },
+      <span class="hljs-string">"endpointUrl"</span>:<span class="hljs-string">"https://example.com/api/booking/"</span>,
+      <span class="hljs-string">"conformsTo"</span>:[
+         <span class="hljs-string">"https://www.openactive.io/open-booking-api/2.0/"</span>
+      ],
+      <span class="hljs-string">"endpointDescription"</span>:<span class="hljs-string">"https://www.openactive.io/open-booking-api/2.0/swagger.json"</span>,
+      <span class="hljs-string">"bookingService"</span>: {
+        <span class="hljs-string">"@type"</span>: <span class="hljs-string">"SoftwareApplication"</span>,
+        <span class="hljs-string">"name"</span>: <span class="hljs-string">"nyExampleBookingPlatform"</span>,
+        <span class="hljs-string">"softwareVersion"</span>: <span class="hljs-string">"1.2"</span>,
+        <span class="hljs-string">"url"</span>: <span class="hljs-string">"https://www.example.com/myExampleBookingPlatform"</span>,
+        <span class="hljs-string">"featureList"</span>: <span class="hljs-string">"https://www.example.com"</span>
+
+
+      }
+   }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></section></section></section><section id="discoverability-and-dataset-sites-using-schema-datacatalog"><h4 id="x5-4-3-discoverability-and-dataset-sites-using-schema-datacatalog"><bdi class="secno">5.4.3 </bdi>Discoverability and Dataset Sites (using <code>schema:DataCatalog</code>)<a class="self-link" aria-label="§" href="#discoverability-and-dataset-sites-using-schema-datacatalog"></a></h4><p><a href="#dfn-data-catalog" class="internalDFN" data-link-type="dfn">Data Catalogs</a> will normally be published as JSON-LD objects accessible via a URL.</p><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@context</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Array of URL values</td>
+<td>Will normally consist only of the value <code>http://schema.org/</code>. Note that, in conformity with <a href="https://tools.ietf.org/html/rfc3986#section-3.3">RFC3986</a>, trailing slashes <em class="rfc2119" title="MUST">MUST</em> be supplied where appropriate.</td>
+</tr>
+<tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>String</td>
+<td><code>DataCatalog</code></td>
+</tr>
+<tr>
+<td><code>@id</code></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL</td>
+<td>A unique identifier for the DataCatalog, often identical to the URL at which the DataCatalog is found.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/datePublished"><code>schema:datePublished</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td><code>schema:Date</code></td>
+<td>The date the <code>DataCatalog</code> was published.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/publisher"><code>schema:publisher</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td><code>schema:Organization</code></td>
+<td>The <code>Organization</code> responsible for publishing the DataCatalog.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/license"><code>schema:license</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>URL</td>
+<td>A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be <code>https://creativecommons.org/licenses/by/4.0/</code>.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/dataset"><code>schema:dataset</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em> if <code>hasPart</code> is absent, <em class="rfc2119" title="OPTIONAL">OPTIONAL</em> otherwise.</td>
+<td>Array of URL</td>
+<td>One or more URLs pointing to OpenActive Dataset Sites.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/hasPart"><code>schema:hasPart</code></a></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em> if <code>dataset</code> is absent, <em class="rfc2119" title="OPTIONAL">OPTIONAL</em> otherwise.</td>
+<td>Array of URL</td>
+<td>One or more URLs pointing to other OpenActive DataCatalogs.</td>
+</tr>
+</tbody></table><div class="note" role="note" id="issue-container-generatedID-3"><div role="heading" class="note-title marker" id="h-note-3" aria-level="5"><span>Note</span><span class="issue-label">: Trailing slashes and @context</span></div><div class="">
+
+
+<p>It is common practice is to reference <a href="https://schema.org">https://schema.org</a> without a trailing / within @context. However to be consistent with the OpenActive Modelling Opportunity Data specification, which uses the full URI of <a href="https://openactive.io/">https://openactive.io/</a> (including a path as per <a href="https://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986</a>, the specification requires the schema.org context to be referenced with a trailing slash, i.e. <a href="https://schema.org/">https://schema.org/</a>.</p>
+</div></div><section id="schema-org-to-dcat-mapping"><h5 id="x5-4-3-1-schema-org-to-dcat-mapping"><bdi class="secno">5.4.3.1 </bdi>schema.org to DCAT mapping<a class="self-link" aria-label="§" href="#schema-org-to-dcat-mapping"></a></h5><p>The W3C DCAT 2.0 standard is widely used to publish Data Catalogs. In order to make the semantics of OpenActive Data Catalogs clear, and to assist developers and organisations more familiar with DCAT, a mapping from DCAT 2.0 to OpenActive schema.org-based Data Catalog elements is provided here.</p><table>
+<thead>
+<tr>
+<th>DCAT 2.0 Element</th>
+<th>schema.org target element</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:resource_release_date"><code>dcat:issued</code></a></td>
+<td><a href="https://schema.org/datePublished"><code>schema:datePublished</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:resource_publisher"><code>dcat:publisher</code></a></td>
+<td><a href="https://schema.org/publisher"><code>schema:publisher</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:resource_license"><code>dcat:license</code></a></td>
+<td><a href="https://schema.org/license"><code>schema:license</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:catalog_dataset"><code>dcat:dataset</code></a></td>
+<td><a href="https://schema.org/dataset"><code>schema:dataset</code></a></td>
+</tr>
+<tr>
+<td><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:catalog_has_part"><code>dcat:hasPart</code></a></td>
+<td><a href="https://schema.org/hasPart"><code>schema:hasPart</code></a></td>
+</tr>
+</tbody></table><section id="worked-example-0"><h6 id="x5-4-3-1-1-worked-example"><bdi class="secno">5.4.3.1.1 </bdi>Worked example<a class="self-link" aria-label="§" href="#worked-example-0"></a></h6><p>The below is an example of a <code>DataCatalog</code> JSON object.</p><pre><code aria-busy="false" class="hljs json">{
+     <span class="hljs-attr">"@context"</span>: <span class="hljs-string">" https://schema.org/"</span>,
+     <span class="hljs-attr">"@type"</span>: <span class="hljs-string">"DataCatalog"</span>,
+     <span class="hljs-attr">"id"</span>: <span class="hljs-string">"https://opendata.example.live/api/datacatalog"</span>,
+     <span class="hljs-attr">"dataset"</span>: [
+          <span class="hljs-string">"https://api.example.org.uk/OpenActive/"</span>,
+          <span class="hljs-string">"https://booking.example.co.uk/OpenActive/"</span>,
+          <span class="hljs-string">"https://active.example.net/OpenActive/"</span>,
+          <span class="hljs-string">"https://camp.example.net/OpenActive/"</span>
+     ],
+     <span class="hljs-attr">"datePublished"</span>: <span class="hljs-string">"2020-10-21T12:28:09.7981681+00:00"</span>,
+     <span class="hljs-attr">"publisher"</span>: {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Organization"</span>,
+          <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Example.com"</span>,
+          <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://www.example.com/systems"</span>
+     },
+     <span class="hljs-attr">"license"</span>: <span class="hljs-string">"https://creativecommons.org/licenses/by/4.0/"</span>
+}
+</code></pre></section></section></section><section id="describing-publishers-schema-organization"><h4 id="x5-4-4-describing-publishers-schema-organization"><bdi class="secno">5.4.4 </bdi>Describing Publishers (<code>schema:Organization</code>)<a class="self-link" aria-label="§" href="#describing-publishers-schema-organization"></a></h4><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Status</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@type</code></td>
+<td><em class="rfc2119" title="REQUIRED">REQUIRED</em></td>
+<td>Text</td>
+<td><code>Organization</code></td>
+</tr>
+<tr>
+<td><a href="https://schema.org/name"><code>schema:name</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>Text</td>
+<td>The name of the <code>Organization</code> publishing the datasets.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/logo"><code>schema:logo</code></a></td>
+<td><em class="rfc2119" title="OPTIONAL">OPTIONAL</em></td>
+<td>URL</td>
+<td>A link to the publishing <code>Organization</code>'s logo.</td>
+</tr>
+<tr>
+<td><a href="https://schema.org/url"><code>schema:url</code></a></td>
+<td><em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em></td>
+<td>URL</td>
+<td>A link to the publishing <code>Organization</code>'s website.</td>
+</tr>
+</tbody></table></section><section id="removing-data-feeds"><h4 id="x5-4-5-removing-data-feeds"><bdi class="secno">5.4.5 </bdi>Removing data feeds<a class="self-link" aria-label="§" href="#removing-data-feeds"></a></h4><section id="data-publishers"><h5 id="x5-4-5-1-data-publishers"><bdi class="secno">5.4.5.1 </bdi>Data Publishers<a class="self-link" aria-label="§" href="#data-publishers"></a></h5><p>In the event that a feed is to be removed permanently, publishers <em class="rfc2119" title="MUST">MUST</em>:</p><ol>
+<li>Remove the link to the feed from their dataset site</li>
+<li>Ensure that the feed URL returns a 404 ('Not Found') status code. This response should be returned for a period of at least seven (7) days from the date of initial removal, in order to ensure that regularly-consuming applications receive an explicit indication of removal within a reasonable timeframe.</li>
+</ol><p>In the event that all data feeds are to be removed permanently and the publisher is ceasing to publish OpenActive feeds entirely, the dataset site as a whole should be removed and its URL return a 404.</p></section><section id="data-consumers"><h5 id="x5-4-5-2-data-consumers"><bdi class="secno">5.4.5.2 </bdi>Data Consumers<a class="self-link" aria-label="§" href="#data-consumers"></a></h5><p>In the event that a consuming application receives a 404 response from a previously-harvested feed URL, all records associated with that feed <em class="rfc2119" title="MUST">MUST</em> be purged from its datastore. This is to ensure data privacy and compliance with related legislation, such as e.g. the General Data Protection Regulation (GDPR).</p></section></section></section></section><section class="normative" id="future-versions-of-this-api"><h2 id="x6-future-versions-of-this-api"><bdi class="secno">6. </bdi>Future versions of this API<a class="self-link" aria-label="§" href="#future-versions-of-this-api"></a></h2><p>Future iterations of the specification be shaped by the OpenActive community, and we encourage you to get involved.</p></section><section class="appendix informative" id="acknowledgements"><h2 id="a-acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements<a class="self-link" aria-label="§" href="#acknowledgements"></a></h2><p><em>This section is non-normative.</em></p><p>The editors thank <a href="https://www.w3.org/community/openactive/participants">all members</a> of the OpenActive Community Group for their contributions.</p></section><section id="references" class="appendix"><h2 id="b-references"><bdi class="secno">B. </bdi>References<a class="self-link" aria-label="§" href="#references"></a></h2><section id="normative-references">
+      <h3 id="b-1-normative-references"><bdi class="secno">B.1 </bdi>
+        Normative references
+      <a class="self-link" aria-label="§" href="#normative-references"></a></h3>
+    <dl class="bibliography">
+      <dt id="bib-json-ld">[JSON-LD]</dt><dd><a href="https://www.w3.org/TR/json-ld/"><cite>JSON-LD 1.0</cite></a>.  W3C. W3C Recommendation. URL: <a href="https://www.w3.org/TR/json-ld/">https://www.w3.org/TR/json-ld/</a></dd><dt id="bib-rfc2119">[RFC2119]</dt><dd><a href="https://tools.ietf.org/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a></dd><dt id="bib-rfc8174">[RFC8174]</dt><dd><a href="https://tools.ietf.org/html/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc8174">https://tools.ietf.org/html/rfc8174</a></dd>
+    </dl></section></section><p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
