@@ -3,7 +3,7 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>Dataset API Discovery 0.2</title>
+    <title>Dataset API Discovery 0.3</title>
 
     <script type="text/javascript" class='remove'>
         var respecConfig = {
@@ -423,7 +423,7 @@ The purpose of a <a>Data Catalog</a> is to provide:
 
 ### Human-readable content
 
-With the exception of licensing information, there are no strong requirements for the human-readable content of dataset pages, and implementers may provide whatever information they see fit here. For the convenience of end-users, however, it is normally expected that a `Dataset Page` will provide **at least** the following information and markup:
+With the exception of licensing information, there are no strong requirements for the human-readable content of dataset pages, and implementers may provide whatever information they see fit here. For the convenience of end-users, however, it is normally expected (and is RECOMMENDED) that a `Dataset Page` will provide **at least** the following information and markup:
 
 * the name of the organisation publishing the data
 * the standards to which the published data conforms (e.g., the Opportunity standard)
@@ -471,24 +471,23 @@ The following OpenGraph properties are RECOMMENDED for use in `<meta>` elements 
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@context|REQUIRED|Array of URL values|Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied.|
-|@type|REQUIRED|Text|`Dataset`|
-|@id|REQUIRED|URL|A URL uniquely identifying the dataset site resource. May be the URL of the <a>Dataset Site</a> itself|
-|url|REQUIRED|URL|Typically the URL of the dataset site itself.|
-|name|REQUIRED|Text|The name of the collection of datasets referenced by the site. Often this will simply be the name of the publishing organisation.|
-|description|RECOMMENDED|Text|A human-readable description of the datasets referenced by the site.|
-|keywords|OPTIONAL|Array of Text|Short descriptive metadata tags for the dataset collection.|
-|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
-|distribution|REQUIRED|Array of `dcat:Distribution` object|See below, Describing Individual Feeds|
-|discussionUrl|RECOMMENDED|URL|A link to a resource for discussing and raising issues with the published datasets. Typically, although not necessarily, this will be a link to a GitHub repository.|
-|documentation|RECOMMENDED|Array of URL|Link(s) to further resources concerning the dataset site and its referenced datasets - e.g., GitHub READMEs or status summaries.|
-|inLanguage|RECOMMENDED|String|The language of the dataset. Should be expressed as an ISO 639-2 language code.|
-|publisher|REQUIRED|schema:Organization|The organization responsible for publishing the collection of datasets linked to by the dataset site. For further information, see below, Describing Organizations.|
-|datePublished|REQUIRED|schema:Date|The date the dataset site was published.|
-|schemaVersion|REQUIRED|URL|The version of the dataset site specification to which the site conforms.|
-|softwareVersion|RECOMMENDED|URL|A link to a repository holding the code by which the site was generated.|
+|`@context`|REQUIRED|Array of URL values|Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied.|
+|`@type`|REQUIRED|Text|`Dataset`|
+|`@id`|REQUIRED|URL|A URL uniquely identifying the dataset site resource. May be the URL of the <a>Dataset Site</a> itself|
+|[`schema:url`](https://schema.org/url)|REQUIRED|URL|Typically the URL of the dataset site itself.|
+|[`schema:name`](https://schema.org/name)|REQUIRED|Text|The name of the collection of datasets referenced by the site. Often this will simply be the name of the publishing organisation.|
+|[`schema:description`](https://schema.org/description)|RECOMMENDED|Text|A human-readable description of the datasets referenced by the site.|
+|[`schema:keywords`](https://schema.org/keywords)|OPTIONAL|Array of Text|Short descriptive metadata tags for the dataset collection.|
+|[`schema:license`](https://schema.org/license)|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|[`schema:distribution`](https://schema.org/distribution)|REQUIRED|Array of `dcat:Distribution` object|See below, Describing Individual Feeds|
+|[`schema:discussionUrl`](https://schema.org/discussionUrl)|RECOMMENDED|URL|A link to a resource for discussing and raising issues with the published datasets. Typically, although not necessarily, this will be a link to a GitHub repository.|
+|[`schema:documentation`](https://schema.org/documentation)|RECOMMENDED|Array of URL|Link(s) to further resources concerning the dataset site and its referenced datasets - e.g., GitHub READMEs or status summaries.|
+|[`schema:inLanguage`](https://schema.org/inLanguage)|RECOMMENDED|String|The language of the dataset. Should be expressed as an ISO 639-2 language code.|
+|[`schema:publisher`](https://schema.org/publisher)|REQUIRED|schema:Organization|The organization responsible for publishing the collection of datasets linked to by the dataset site. For further information, see below, Describing Organizations.|
+|[`schema:datePublished`](https://schema.org/datePublished)|REQUIRED|schema:Date|The date the dataset site was published.|
+|[`schema:schemaVersion`](https://schema.org/schemaVersion)|REQUIRED|URL|The version of the dataset site specification to which the site conforms.|
 
-The MIME-type of this JSON object MUST be `application/ld+json`.
+The MIME-type of this JSON object MUST be defined on the enclosing HTML `script` tag as `application/ld+json`.
 
 <div class="note" title="Trailing slashes and @context">
 It is common practice is to reference https://schema.org without a trailing / within @context. However to be consistent with the OpenActive Modelling Opportunity Data specification, which uses the full URI of https://openactive.io/ (including a path as per [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.3), the specification requires the schema.org context to be referenced with a trailing slash, i.e. https://schema.org/.
@@ -498,33 +497,33 @@ It is common practice is to reference https://schema.org without a trailing / wi
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@type|REQUIRED|Text|`DataDownload`|
-|name|REQUIRED|Text|A human-readable name for the dataset.|
-|additionalType|RECOMMENDED|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
-|encodingFormat|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
-|contentUrl|REQUIRED|URL|The URL of the feed containing the dataset.|
-|totalItems|RECOMMENDED|Integer|The total number of items that can be expected in the feed. Note that this number will often be approximate only, given the rapidity with which updates may be made to backend datastores.|
+|`@type`|REQUIRED|Text|`DataDownload`|
+|[`schema:name`](https://schema.org/name)|REQUIRED|Text|A human-readable name for the dataset.|
+|[`schema:additionalType`](https://schema.org/additionalType)|RECOMMENDED|URL|A link to a definition of the type of the feed - e.g of `ScheduledSessions` or `CourseInstances`|
+|[`schema:encodingFormat`](https://schema.org/encodingFormat)|RECOMMENDED|Text or URL|The MIME-type of the data accessible via the `contentUrl`|
+|[`schema:contentUrl`](https://schema.org/contentUrl)|REQUIRED|URL|The URL of the feed containing the dataset.|
+|[`schema:totalItems`](https://schema.org/totalItems)|RECOMMENDED|Integer|The total number of items (whether `updated` or `deleted`) that are available from the beginning of the feed. Note that this number will often be approximate only, given the rapidity with which updates may be made to backend datastores.|
 
-### Supporting Booking (`schema:webAPI`)
+### Supporting Booking (`schema:WebAPI`)
 
 In addition to the above markup for discoverability, dataset sites that support Open Booking API functionality MUST indicate this with markup enabling discovery and use of the relevant API endpoints.
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@type|REQUIRED|Text|`WebAPI`|
-|name|RECOMMENDED|Text|A human-readable name for the dataset.|
-|description|OPTIONAL|Text|A human-readable description of the API|
-|documentation|RECOMMENDED|URL or schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
-|termsOfService|REQUIRED|Text or URL|Human-readable terms of service documentation.|
-|provider|REQUIRED|schema:Organization|The Organization providing the API endpoint.|
-|endpointUrl|REQUIRED|URL|The root location or primary endpoint of the API.|
-|conformsTo|RECOMMENDED|URL|The URL reference of an established standard to which the described API conforms.|
-|version|RECOMMENDED|Text|The version of the URL.|
-|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
-|endpointDescription|RECOMMENDED|schema:CreativeWork|A machine-readable description of the API. See Describing API Endpoints, below|
-|bookingService|RECOMMENDED|`schema:SoftwareApplication`|The software system responsible for handling booking over the Open Booking API.|
+|`@type`|REQUIRED|Text|`WebAPI`|
+|[`schema:name`](https://schema.org/name)|RECOMMENDED|Text|A human-readable name for the dataset.|
+|[`schema:description`](https://schema.org/description)|OPTIONAL|Text|A human-readable description of the API|
+|[`schema:documentation`](https://schema.org/documentation)|RECOMMENDED|URL or schema:CreativeWork|Human-readable API documentation. See Describing API Endpoints, below.|
+|[`schema:termsOfService`](https://schema.org/termsOfService)|REQUIRED|Text or URL|Human-readable terms of service documentation.|
+|[`schema:provider`](https://schema.org/provider)|REQUIRED|schema:Organization|The Organization providing the API endpoint.|
+|[`schema:endpointUrl`](https://schema.org/endpointUrl)|REQUIRED|URL|The root location or primary endpoint of the API.|
+|[`schema:conformsTo`](https://schema.org/conformsTo)|RECOMMENDED|URL|The URL reference of an established standard to which the described API conforms.|
+|[`schema:license`](https://schema.org/license)|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|[`schema:endpointDescription`](https://schema.org/endpointDescription)|RECOMMENDED|`schema:EntryPoint`|A machine-readable description of the API. See Describing API Endpoints, below|
+|[`schema:bookingService`](https://schema.org/bookingService)|RECOMMENDED|`schema:SoftwareApplication`|The software system responsible for handling booking over the Open Booking API.|
+|[`oa:authenticationAuthority`](https://openactive.io/oa:authenticationAuthority)|`schema:URL`|The location of the OpenID Provider or other relevant authentication authority that must be used to access the API.|e.g. `https://auth.bookingsystem.com`|
 
-### Describing API Endpoints (`schema:CreativeWork`)
+### Describing API Endpoints (`schema:EntryPoint`)
 
 Supporting documentation is crucial for the successful uptake and use of APIs. Ideally, both human-readable freetext and machine-readable structured data are made available.
 
@@ -532,22 +531,21 @@ The schema.org objects for human- and machine-readable documents are largely ide
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@type|REQUIRED|Text|`CreativeWork`|
-|url|REQUIRED|URL|A URL pointing to supporting documentation for the API.|
-|encodingFormat|RECOMMENDED|Text|The MIME-type delivered by the url. For human-readable documentation (`schema:documentation`) this will normally be `text/html`; for machine-readable documentation (`schema:endpointUrl`), `application/json` or a more-specific subtype of this.|
-|beta:ordersFeedURL|OPTIONAL|URL|In cases where the Open Booking Orders Feed is found at a URL outside the domain of the other API endpoints, its absolute URL should be supplied here. For further information see the [Open Booking API specification]( https://openactive.io/open-booking-api/EditorsDraft/#paths-and-verbs).|
-
+|`@type`|REQUIRED|Text|`EntryPoint`|
+|[`schema:url`](https://schema.org/url)|REQUIRED|URL|A URL pointing to supporting documentation for the API.|
+|[`schema:encodingFormat`](https://schema.org/encodingFormat)|RECOMMENDED|Text|The MIME-type delivered by the url. For human-readable documentation (`schema:documentation`) this will normally be `text/html`; for machine-readable documentation (`schema:endpointUrl`), `application/json` or a more-specific subtype of this.|
+<!-- |beta:ordersFeedURL|OPTIONAL|URL|In cases where the Open Booking Orders Feed is found at a URL outside the domain of the other API endpoints, its absolute URL should be supplied here. For further information see the [Open Booking API specification]( https://openactive.io/open-booking-api/EditorsDraft/#paths-and-verbs).|
+-->
 ### Describing Booking Services (`schema:SoftwareApplication`)
 
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@type|REQUIRED|Text|`SoftwareApplication`|
-|name|REQUIRED|Text|The name of the software application|
-|version|REQUIRED|Text|The version of the software application|
-|url|OPTIONAL|`schema:URL`|The URL of a human-readable web-page providing further information about the software.|
-|featureList|RECOMMENDED|Array of `schema:URL`|A URL or URLs pointing to a machine-readable description of the Open Booking API features implemented by the system, e.g. as generated by the [OpenActive Test Suite](https://github.com/openactive/openactive-test-suite).|
-
+|`@type`|REQUIRED|Text|`SoftwareApplication`|
+|[`schema:name`](https://schema.org/name)|REQUIRED|Text|The name of the software application|
+|[`schema:url`](https://schema.org/url)|OPTIONAL|`schema:URL`|The URL of a human-readable web-page providing further information about the software.|
+|[`schema:featureList`](https://schema.org/featureList)|RECOMMENDED|`schema:URL`|A URL pointing to a machine-readable description of the Open Booking API features implemented by the system, e.g. as generated by the [OpenActive Test Suite](https://github.com/openactive/openactive-test-suite).|
+|[`schema:softwareVersion`](https://schema.org/softwareVersion)|RECOMMENDED|Text|Version of the software instance.|
 
 
 <div class="note">
@@ -559,6 +557,7 @@ The `schema:WebAPI` specification has been assigned Pending status by the schema
 The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `ScheduledSessions`, `SessionSeries`, and `Events`. As the presence of the `webAPI` attribute indicates, data items from these feeds are bookable.
 
 ```
+<script type="application/ld+json`/">
 {
    "@context":[
       "https://schema.org/",
@@ -605,21 +604,24 @@ The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `Sch
          "name":"ScheduledSession",
          "additionalType":"https://openactive.io/ScheduledSession",
          "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
-         "contentUrl":"https://example.com/api/openactive/scheduledsessions"
+         "contentUrl":"https://example.com/api/openactive/scheduledsessions",
+         "totalItems": 1852
       },
       {
          "@type":"DataDownload",
          "name":"SessionSeries",
          "additionalType":"https://openactive.io/SessionSeries",
          "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
-         "contentUrl":"https://example.com/api/openactive/sessionseries"
+         "contentUrl":"https://example.com/api/openactive/sessionseries",
+         "totalItems": 361
       },
       {
          "@type":"DataDownload",
          "name":"Event",
          "additionalType":"https://schema.org/Event",
          "encodingFormat":"application/vnd.openactive.rpde+json; version=1",
-         "contentUrl":"https://example.com/api/openactive/events"
+         "contentUrl":"https://example.com/api/openactive/events",
+         "totalItems": 1906
       }
    ],
    "backgroundImage":{
@@ -633,13 +635,30 @@ The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `Sch
       "description":"The Open Booking API lets you to book OpenActive Opportunities. The API uses standard schema.org types and is compliant with the JSON-LD specification.",
       "documentation":"https://openactive.io/open-booking-api/EditorsDraft",
       "termsOfService":"https://example.com/api/booking/documentation/terms-of-service",
+      "provider": {
+        "@type": "Organization",
+        "name":"examplebooking.com",
+        "description":"examplebooking.com makes it easy to get booking!",
+        "url":"https://examplebooking.com/home",
+        "email":"support@examplebooking.com"
+      },
       "endpointUrl":"https://example.com/api/booking/",
       "conformsTo":[
          "https://www.openactive.io/open-booking-api/2.0/"
       ],
-      "endpointDescription":"https://www.openactive.io/open-booking-api/2.0/swagger.json"
+      "endpointDescription":"https://www.openactive.io/open-booking-api/2.0/swagger.json",
+      "bookingService": {
+        "@type": "SoftwareApplication",
+        "name": "nyExampleBookingPlatform",
+        "softwareVersion": "1.2",
+        "url": "https://www.example.com/myExampleBookingPlatform",
+        "featureList": "https://www.example.com"
+
+
+      }
    }
 }
+</script>
 ```
 
 
@@ -649,18 +668,30 @@ The below illustrates a <a>Dataset Site</a> pointing to feeds consisting of `Sch
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@context|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`. Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied where appropriate.|
-|@type|REQUIRED|String|`DataCatalog`|
-|@id|RECOMMENDED|URL|A unique identifier for the DataCatalog, often identical to the URL at which the DataCatalog is found.|
-|dataPublished|RECOMMENDED|`schema:Date`|The date the `DataCatalog` was published.|
-|publisher|RECOMMENDED|`schema:Organization`|The `Organization` responsible for publishing the DataCatalog.|
-|license|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
-|dataset|REQUIRED if `hasPart` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to OpenActive Dataset Sites.|
-|hasPart|REQUIRED if `dataset` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to other OpenActive DataCatalogs.|
+|`@context`|REQUIRED|Array of URL values|Will normally consist only of the value `http://schema.org/`. Note that, in conformity with [RFC3986](https://tools.ietf.org/html/rfc3986#section-3.3), trailing slashes MUST be supplied where appropriate.|
+|`@type`|REQUIRED|String|`DataCatalog`|
+|`@id`|RECOMMENDED|URL|A unique identifier for the DataCatalog, often identical to the URL at which the DataCatalog is found.|
+|[`schema:datePublished`](https://schema.org/datePublished)|RECOMMENDED|`schema:Date`|The date the `DataCatalog` was published.|
+|[`schema:publisher`](https://schema.org/publisher)|RECOMMENDED|`schema:Organization`|The `Organization` responsible for publishing the DataCatalog.|
+|[`schema:license`](https://schema.org/license)|REQUIRED |URL|A URL reference to the license under which the dataset site is published. For OpenActive dataset sites this should be `https://creativecommons.org/licenses/by/4.0/`.|
+|[`schema:dataset`](https://schema.org/dataset)|REQUIRED if `hasPart` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to OpenActive Dataset Sites.|
+|[`schema:hasPart`](https://schema.org/hasPart)|REQUIRED if `dataset` is absent, OPTIONAL otherwise.|Array of URL|One or more URLs pointing to other OpenActive DataCatalogs.|
 
 <div class="note" title="Trailing slashes and @context">
 It is common practice is to reference https://schema.org without a trailing / within @context. However to be consistent with the OpenActive Modelling Opportunity Data specification, which uses the full URI of https://openactive.io/ (including a path as per [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.3), the specification requires the schema.org context to be referenced with a trailing slash, i.e. https://schema.org/.
 </div>
+
+### schema.org to DCAT mapping
+
+The W3C DCAT 2.0 standard is widely used to publish Data Catalogs. In order to make the semantics of OpenActive Data Catalogs clear, and to assist developers and organisations more familiar with DCAT, a mapping from DCAT 2.0 to OpenActive schema.org-based Data Catalog elements is provided here.
+
+|DCAT 2.0 Element|schema.org target element| 
+|----------------|-------------------------|
+|[`dcat:issued`](https://www.w3.org/TR/vocab-dcat-2/#Property:resource_release_date)|[`schema:datePublished`](https://schema.org/datePublished)|
+|[`dcat:publisher`](https://www.w3.org/TR/vocab-dcat-2/#Property:resource_publisher)|[`schema:publisher`](https://schema.org/publisher)|
+|[`dcat:license`](https://www.w3.org/TR/vocab-dcat-2/#Property:resource_license)|[`schema:license`](https://schema.org/license)|
+|[`dcat:dataset`](https://www.w3.org/TR/vocab-dcat-2/#Property:catalog_dataset)|[`schema:dataset`](https://schema.org/dataset)|
+|[`dcat:hasPart`](https://www.w3.org/TR/vocab-dcat-2/#Property:catalog_has_part)|[`schema:hasPart`](https://schema.org/hasPart)|
 
 #### Worked example
 
@@ -692,10 +723,10 @@ The below is an example of a `DataCatalog` JSON object.
 
 |Property|Status|Type|Notes|
 |--------|------|----|-----|
-|@type|REQUIRED|Text|`Organization`|
-|name|RECOMMENDED|Text|The name of the `Organization` publishing the datasets.|
-|logo|OPTIONAL|URL|A link to the publishing `Organization`'s logo.|
-|url|RECOMMENDED|URL|A link to the publishing `Organization`'s website.|
+|`@type`|REQUIRED|Text|`Organization`|
+|[`schema:name`](https://schema.org/name)|RECOMMENDED|Text|The name of the `Organization` publishing the datasets.|
+|[`schema:logo`](https://schema.org/logo)|OPTIONAL|URL|A link to the publishing `Organization`'s logo.|
+|[`schema:url`](https://schema.org/url)|RECOMMENDED|URL|A link to the publishing `Organization`'s website.|
 
 ## Removing data feeds
 
@@ -705,6 +736,8 @@ In the event that a feed is to be removed permanently, publishers MUST:
 
 1. Remove the link to the feed from their dataset site
 1. Ensure that the feed URL returns a 404 ('Not Found') status code. This response should be returned for a period of at least seven (7) days from the date of initial removal, in order to ensure that regularly-consuming applications receive an explicit indication of removal within a reasonable timeframe.
+
+In the event that all data feeds are to be removed permanently and the publisher is ceasing to publish OpenActive feeds entirely, the dataset site as a whole should be removed and its URL return a 404.
 
 ### Data Consumers
 
